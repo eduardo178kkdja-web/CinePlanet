@@ -39,6 +39,7 @@
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
+            overflow-y: auto;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             touch-action: manipulation;
@@ -245,11 +246,10 @@
             outline-color: var(--primary);
         }
 
-        /* CONTENEDOR DE IMAGEN - SOLUCIÓN PARA MÓVILES */
         .movie-poster-wrapper {
             position: relative;
             width: 100%;
-            padding-bottom: 148%; /* Proporción 2:3 para posters */
+            padding-bottom: 148%;
             overflow: hidden;
             background: #1a1a1a;
         }
@@ -549,7 +549,390 @@
             grid-column: 1 / -1;
         }
 
-        /* RESPONSIVE - MEJORADO PARA MÓVILES */
+        /* ===== ADMIN PANEL ===== */
+        .admin-trigger {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: rgba(229, 9, 20, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 2px solid rgba(229, 9, 20, 0.3);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 999;
+            color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .admin-trigger:hover {
+            transform: scale(1.1);
+            background: rgba(229, 9, 20, 0.3);
+            border-color: var(--primary);
+        }
+
+        #adminPanel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            overflow-y: auto;
+            padding: 20px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        #adminPanel .admin-box {
+            max-width: 650px;
+            margin: 20px auto;
+            background: #1a1a1a;
+            border-radius: 16px;
+            padding: 30px;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+        }
+
+        #adminPanel .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(229, 9, 20, 0.3);
+        }
+
+        #adminPanel .admin-header h2 {
+            color: var(--primary);
+            font-size: 24px;
+            margin: 0;
+        }
+
+        #adminPanel .admin-close {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 32px;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 0 10px;
+            line-height: 1;
+        }
+
+        #adminPanel .admin-close:hover {
+            color: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        #adminPanel .admin-login {
+            margin-bottom: 20px;
+        }
+
+        #adminPanel .admin-login p {
+            margin-bottom: 12px;
+            color: var(--text-muted);
+        }
+
+        #adminPanel .admin-login .input-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        #adminPanel .admin-login input {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background: #0a0a0a;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        #adminPanel .admin-login input:focus {
+            border-color: var(--primary);
+            background: #1a1a1a;
+        }
+
+        #adminPanel .admin-login .btn-acceder {
+            padding: 12px 30px;
+            background: var(--primary);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 16px;
+        }
+
+        #adminPanel .admin-login .btn-acceder:hover {
+            background: #ff1a1a;
+        }
+
+        #adminPanel .error-clave {
+            color: #e50914;
+            margin-top: 8px;
+            display: none;
+            font-size: 14px;
+        }
+
+        #adminPanel .admin-form {
+            display: none;
+        }
+
+        #adminPanel .success-msg {
+            color: #00cc66;
+            margin-bottom: 15px;
+            padding: 12px 15px;
+            background: rgba(0, 204, 102, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #00cc66;
+            font-size: 14px;
+        }
+
+        #adminPanel .form-group {
+            margin-bottom: 15px;
+        }
+
+        #adminPanel .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        #adminPanel .form-group label .required {
+            color: var(--primary);
+        }
+
+        #adminPanel .form-group input,
+        #adminPanel .form-group textarea,
+        #adminPanel .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background: #0a0a0a;
+            color: white;
+            font-size: 15px;
+            outline: none;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        #adminPanel .form-group input:focus,
+        #adminPanel .form-group textarea:focus,
+        #adminPanel .form-group select:focus {
+            border-color: var(--primary);
+            background: #1a1a1a;
+        }
+
+        #adminPanel .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        #adminPanel .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        #adminPanel .btn-agregar {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 5px;
+        }
+
+        #adminPanel .btn-agregar:hover {
+            background: #ff1a1a;
+        }
+
+        #adminPanel .btn-exportar {
+            width: 100%;
+            padding: 14px;
+            background: #2d7d46;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 5px;
+        }
+
+        #adminPanel .btn-exportar:hover {
+            background: #3a9e5a;
+        }
+
+        #adminPanel .admin-divider {
+            border: none;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            margin: 25px 0;
+        }
+
+        #adminPanel .peliculas-lista {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        #adminPanel .peliculas-lista .pelicula-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            transition: var(--transition);
+        }
+
+        #adminPanel .peliculas-lista .pelicula-item:hover {
+            background: rgba(255,255,255,0.08);
+        }
+
+        #adminPanel .peliculas-lista .pelicula-item .info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        #adminPanel .peliculas-lista .pelicula-item .info .mini-poster {
+            width: 40px;
+            height: 56px;
+            object-fit: cover;
+            border-radius: 4px;
+            flex-shrink: 0;
+            background: #333;
+        }
+
+        #adminPanel .peliculas-lista .pelicula-item .info .text {
+            overflow: hidden;
+        }
+
+        #adminPanel .peliculas-lista .pelicula-item .info .text .titulo {
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        #adminPanel .peliculas-lista .pelicula-item .info .text .detalle {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        #adminPanel .peliculas-lista .pelicula-item .acciones {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        #adminPanel .peliculas-lista .pelicula-item .acciones button {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+
+        #adminPanel .peliculas-lista .pelicula-item .acciones .btn-eliminar {
+            background: rgba(229, 9, 20, 0.2);
+            color: #e50914;
+        }
+
+        #adminPanel .peliculas-lista .pelicula-item .acciones .btn-eliminar:hover {
+            background: rgba(229, 9, 20, 0.4);
+        }
+
+        #adminPanel .vacio {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-muted);
+        }
+
+        #adminPanel .badge-count {
+            background: rgba(229, 9, 20, 0.2);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        #adminPanel .admin-tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        #adminPanel .admin-tabs button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        #adminPanel .admin-tabs button:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        #adminPanel .admin-tabs button.active {
+            background: rgba(229, 9, 20, 0.2);
+            color: white;
+        }
+
+        #adminPanel .peliculas-lista::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #adminPanel .peliculas-lista::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+
+        #adminPanel .peliculas-lista::-webkit-scrollbar-thumb {
+            background: rgba(229, 9, 20, 0.5);
+            border-radius: 10px;
+        }
+
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -603,7 +986,6 @@
                 padding: 10px 0;
             }
 
-            /* Ajuste de altura para móviles */
             .movie-poster-wrapper {
                 padding-bottom: 140%;
             }
@@ -632,6 +1014,27 @@
 
             .modal {
                 padding: 10px;
+            }
+
+            #adminPanel .admin-box {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            #adminPanel .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            #adminPanel .admin-login .input-group {
+                flex-direction: column;
+            }
+
+            .admin-trigger {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+                bottom: 15px;
+                right: 15px;
             }
         }
 
@@ -665,6 +1068,20 @@
                 font-size: 12px;
                 padding: 6px 10px;
                 min-height: 36px;
+            }
+
+            #adminPanel .peliculas-lista .pelicula-item {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            #adminPanel .peliculas-lista .pelicula-item .info {
+                flex: 1 1 100%;
+            }
+
+            #adminPanel .peliculas-lista .pelicula-item .acciones {
+                width: 100%;
+                justify-content: flex-end;
             }
         }
 
@@ -752,927 +1169,814 @@
         </div>
     </div>
 
-    <script>
-        // Base de datos de películas (50 películas)
-        const peliculas = [
-            {
-                titulo: "Five Nights at Freddy's",
-                poster: "https://www.themoviedb.org/t/p/w600_and_h900_face/t6RSJ1z8bDEYpk4fLwxfkXciUak.jpg",
-                rating: "8.9",
-                anio: 2023,
-                duracion: "1h 49min",
-                genero: "Terror, Suspenso",
-                descripcion: "Un hombre comienza un trabajo como guardia de seguridad nocturno en el restaurante Freddy Fazbear's Pizza, donde descubre que los animatrónicos se mueven por la noche y matan a cualquiera que vean.",
-                director: "Emma Tammi",
-                reparto: "Josh Hutcherson, Piper Rubio, Elizabeth Lail, Matthew Lillard",
-                embedUrl: "https://cuevana3.gs/player.php?t=Y0NDOpzHJ_hyxx3Wwx9gMMOGt6Ak6fB8u8OT-6RaOjOqiq60A8B0EI8hCFdcG2xnV-c744pnz2OWPNCZREC3sA&server=vimeos"
-            },
-            {
-                titulo: "Spider-Man: Cruzando el Multiverso",
-                poster: "https://www.themoviedb.org/t/p/w600_and_h900_face/37WcNMgNOMxdhT87MFl7tq7FM1.jpg",
-                rating: "8.2",
-                anio: 2023,
-                duracion: "2h 29min",
-                genero: "Animación, Acción, Aventura",
-                descripcion: "Miles Morales se reencuentra con Gwen y viaja por el Multiverso, donde conoce a otros Spider-Man.",
-                director: "Joaquim Dos Santos, Kemp Powers",
-                reparto: "Shameik Moore, Hailee Steinfeld, Brian Tyree Henry",
-                embedUrl: "https://cuevana3.gs/player.php?t=xKOsQ8H3ZDFx8veUA1HrDzUQmh-rKa2Qj2vuAhxXxL0rEubDKDxco1i6rAuiHN8A5qaX2V6BQgCmBTYCzsie6Q&server=vimeos"
-            },
-            {
-                titulo: "Spider-Man: De regreso a casa",
-                poster: "https://www.themoviedb.org/t/p/w600_and_h900_face/bRl6C6FwzTndk0MBGZZ68nRFlw3.jpg",
-                rating: "8.6",
-                anio: 2017,
-                duracion: "2h 13min",
-                genero: "Acción, Aventura",
-                descripcion: "Peter Parker intenta equilibrar su vida como estudiante y superhéroe mientras recibe la guía de Tony Stark.",
-                director: "Jon Watts",
-                reparto: "Tom Holland, Michael Keaton, Robert Downey Jr.",
-                embedUrl: "https://cuevana3.gs/player.php?t=tov-i_0JzseLHwY64zAPCTS5CQuwa15Thx-vezxQo7B_YVjnRvRujzOVSZNXxvWH7C8buAtM98_c33-FiXgCsA&server=vimeos"
-            },
-            {
-                titulo: "Super Mario Galaxy la película",
-                poster: "https://www.themoviedb.org/t/p/w600_and_h900_face/79EVB4qhyfrdlMgT8GIRAikdzsQ.jpg",
-                rating: "7.8",
-                anio: 2026,
-                duracion: "1h 38min",
-                genero: "Familia, Comedia, Aventura, Fantasía, y Animación",
-                descripcion: "Batman investiga la corrupción en Gotham City mientras se enfrenta al asesino en serie conocido como el Acertijo.",
-                director: "Aaron Horvath y Michael Jelenic",
-                reparto: "Chris Pratt (Mario), Charlie Day (Luigi), Anya Taylor-Joy (Peach), Jack Black (Bowser), Keegan-Michael Key (Toad), Kevin Michael Richardson (Kamek), Brie Larson (Rosalina), Benny Safdie (Bowser Jr.), Donald Glover (Yoshi), Issa Rae (Honey Queen) y Glen Powell (Fox McCloud).",
-                embedUrl: "https://vimeos.net/embed-v7hdakih9470.html"
-            },
-            {
-                titulo: "Avatar: Fuego y ceniza",
-                poster: "https://www.themoviedb.org/t/p/w600_and_h900_face/4n1U0Mwn7djux6VKNYDRWPgS2x6.jpg",
-                rating: "7.8",
-                anio: 2025,
-                duracion: "3h 17min",
-                genero: "Ciencia ficción, Aventura, y Fantasía",
-                descripcion: "Jake Sully y Neytiri deben proteger a su familia y a Pandora de los Ash People, una peligrosa tribu Na'vi liderada por Varang. Tras la pérdida de su hijo mayor, la familia enfrenta nuevos conflictos y una lucha desesperada por sobrevivir mientras el destino de Pandora pende de un hilo.",
-                director: "James Cameron",
-                reparto: "Sam Worthington (Jake Sully), Zoe Saldaña (Neytiri), Sigourney Weaver (Kiri), Stephen Lang (Quaritch), Oona Chaplin (Varang), Cliff Curtis (Tonowari), Kate Winslet (Ronal), Joel David Moore (Norm Spellman), CCH Pounder (Mo'at), Edie Falco (Frances Ardmore), David Thewlis (Peylak), Jemaine Clement (Ian Garvin), Giovanni Ribisi (Parker Selfridge), Britain Dalton (Lo'ak), Jack Champion (Spider), Trinity Jo-Li Bliss (Tuk), Bailey Bass (Tsireya), Filip Geljo (Ao'nung), Duane Evans Jr. (Rotxo) y Brendan Cowell (Mick Scoresby)",
-                embedUrl: "https://vimeos.net/embed-t0asskfapj18.html"
-            },
-            {
-                titulo: "Backrooms: Sin salida",
-                poster: "https://www.themoviedb.org/t/p/w600_and_h900_face/rhGx6E3qRNMgj3i5su2oukNHwIQ.jpg",
-                rating: "8.4",
-                anio: 2026,
-                duracion: "1h 51min",
-                genero: "Terror, Misterio y Ciencia Ficción",
-                descripcion: "Aparece una puerta extraña en el sótano de una sala de exposiciones de muebles.",
-                director: "Kane Parsons",
-                reparto: "Chiwetel Ejiofor, Renate Reinsve, Mark Duplass, Finn Bennett, Lukita Maxwell, Avan Jogia, Robert Bobroczkyi, Ember Ambrose, Krista Kosonen, Philip Granger, Katharine Isabelle, Peter New, Sarah Hayward, Natalie Moon, Calix Fraser, Sawyer Fraser, Patrick Baynham y Rhiannon Roberts",
-                embedUrl: "https://vimeos.net/embed-bv19oh01kdb9.html"
-            },
-            {
-                titulo: "Saw X",
-                poster: "https://www.themoviedb.org/t/p/w600_and_h900_face/u7Lp1Hi8aBS73jv4KRMIv5aK4ax.jpg",
-                rating: "8.5",
-                anio: 2023,
-                duracion: "2h 32min",
-                genero: "Terror y misterio",
-                descripcion: "John Kramer viaja a México buscando un tratamiento experimental que pueda curar su cáncer, pero descubre que todo es una estafa. Tras descubrir el engaño, decide vengarse de los responsables utilizando sus características trampas mortales, poniendo a los estafadores a prueba en un juego de supervivencia lleno de tensión y terror.",
-                director: "Kevin Greutert",
-                reparto: "Tobin Bell, Shawnee Smith, Synnøve Macody Lund, Steven Brand, Renata Vaca, Joshua Okamoto, Octavio Hinojosa, Paulette Hernández, Jorge Briseño, Costas Mandylor, Michael Beach, David Alfano, Katie Barberi, Donagh Gordon y Lucía Gómez-Robledo",
-                embedUrl: "https://vimeos.net/embed-7rz3zvwg7o9e.html"
-            },
-            {
-                titulo: "Minions & Monsters",
-                poster: "https://www.themoviedb.org/t/p/w600_and_h900_face/nz7i42yhLIJ4ve9JKgM6NthoLHO.jpg",
-                rating: "8.6",
-                anio: 2026,
-                duracion: "1h 30min",
-                genero: "Aventura, Animación, Comedia, Familia y Fantasía",
-                descripcion: "Esta es la historia bulliciosa, ridícula y totalmente real de cómo los Minions conquistaron Hollywood, se convirtieron en estrellas de cine, lo perdieron todo, desataron monstruos en el mundo y luego se unieron para intentar salvar el planeta del caos que acababan de crear..",
-                director: "Pierre Coffin",
-                reparto: "Trey Parker, Allison Janney, Christoph Waltz, Jeff Bridges, Jesse Eisenberg, Zoey Deutch, Bobby Moynihan, Phil LaMarr y George Lucas.",
-                embedUrl: "https://cuevana3.gs/player.php?t=PJttLDfDgPR-Ow-KH7_47q5lve6wHZmCFbLyksZh0r6vKu6AVyH6ph9dAn2cz6wwaBkXsVBLGpKDYSSQCfe-aQ&server=vimeos"
-            },
-            {
-                titulo: "Jurassic World Rebirth",
-                poster: "https://www.themoviedb.org/t/p/w600_and_h900_face/1RICxzeoNCAO5NpcRMIgg1XT6fm.jpg",
-                rating: "8.9",
-                anio: 2025,
-                duracion: "2h 46min",
-                genero: "Ciencia Ficción, Aventura y Acción",
-                descripcion: "Cinco años después de Jurassic World: Dominion, Zora Bennett lidera una misión secreta para obtener material genético de tres enormes dinosaurios. Sin embargo, tras encontrarse con una familia atrapada en una isla, el equipo descubre un oscuro secreto oculto durante décadas.",
-                director: "Gareth Edwards",
-                reparto: "Scarlett Johansson, Mahershala Ali, Jonathan Bailey, Rupert Friend, Manuel García-Rulfo, Luna Blaise, David Iacono, Audrina Miranda, Philippine Velge, Bechir Sylvain y Ed Skrein.",
-                embedUrl: "https://vimeos.net/embed-p7mkty83khe9.html"
-            },
-            {
-                titulo: "Evil Dead Rise",
-                poster: "https://www.themoviedb.org/t/p/w600_and_h900_face/5ik4ATKmNtmJU6AYD0bLm56BCVM.jpg",
-                rating: "8.2",
-                anio: 2023,
-                duracion: "1h 36min",
-                genero: "Terror y Thriller",
-                descripcion: "Un reencuentro entre dos hermanas distanciadas se ve truncado por el surgimiento de demonios poseedores de carne, lo que las lanza a una batalla primitiva por la supervivencia mientras se enfrentan a la versión más aterradora de familia imaginable.",
-                director: "Lee Cronin",
-                reparto: "Lily Sullivan, Alyssa Sutherland, Morgan Davies, Gabrielle Echols, Nell Fisher, Jayden Daniels, Billy Reynolds-McCarthy, Tai Wano, Anna-Maree Thomas, Nedim Jahić y Bruce Campbell.",
-                embedUrl: "https://cuevana3.gs/player.php?t=BO5oncwwFQZhpi_vRWGFxgUOSqaCtcn3BD6Qf5ombZ39xB6AEN7vuC2-te7KW_PDnvPK1V8mc6SYjPrqrszdqQ&server=vimeos"
-            },
-            {
-                titulo: "Bad Boys para Siempre",
-                poster: "https://www.themoviedb.org/t/p/w600_and_h900_face/y95lQLnuNKdPAzw9F9Ab8kJ80c3.jpg",
-                rating: "8.3",
-                anio: 2020,
-                duracion: "2h 4min",
-                genero: "Thriller, Acción y Crimen",
-                descripcion: "Marcus y Mike regresan a la acción junto al nuevo equipo AMMO para enfrentarse a Armando Armas, un peligroso líder de un cartel de drogas. Mientras lidian con cambios personales y una crisis de mediana edad, deberán unir fuerzas para detenerlo.",
-                director: "Adil El Arbi y Bilall Fallah",
-                reparto: "Will Smith, Martin Lawrence, Vanessa Hudgens, Alexander Ludwig, Charles Melton, Paola Núñez, Kate del Castillo, Nicky Jam, Joe Pantoliano, Jacob Scipio, Theresa Randle y DJ Khaled",
-                embedUrl: "https://vimeos.net/embed-cg3mcmop1ct4.html"
-            },
-            {
-                titulo: "Barbie",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/iuFNMS8U5cb6xfzi51Dbkovj7vM.jpg",
-                rating: "7.0",
-                anio: 2023,
-                duracion: "1h 54min",
-                genero: "Comedia, Fantasía",
-                descripcion: "Barbie vive en Barbieland hasta que es expulsada al mundo real por no ser perfecta.",
-                director: "Greta Gerwig",
-                reparto: "Margot Robbie, Ryan Gosling, America Ferrera",
-                embedUrl: "https://vimeos.net/embed-nvnyl2mw5s34.html"
-            },
-            {
-                titulo: "John Wick 4",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg",
-                rating: "7.7",
-                anio: 2023,
-                duracion: "2h 49min",
-                genero: "Acción, Crimen",
-                descripcion: "John Wick descubre un camino para derrotar a la Alta Mesa, pero debe enfrentar a un nuevo enemigo.",
-                director: "Chad Stahelski",
-                reparto: "Keanu Reeves, Donnie Yen, Bill Skarsgård",
-                embedUrl: "https://vimeos.net/embed-f4tp8s5fk17z.html"
-            },
-            {
-                titulo: "Mission: Impossible - Dead Reckoning",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/NNxYkU70HPurnNCSiCjYAmacwm.jpg",
-                rating: "7.8",
-                anio: 2023,
-                duracion: "2h 43min",
-                genero: "Acción, Aventura",
-                descripcion: "Ethan Hunt y su equipo deben encontrar una peligrosa arma antes de que caiga en manos equivocadas.",
-                director: "Christopher McQuarrie",
-                reparto: "Tom Cruise, Hayley Atwell, Ving Rhames",
-                embedUrl: "https://vimeos.net/embed-d45hedrv1by8.html"
-            },
-            {
-                titulo: "Guardianes de la Galaxia Vol. 3",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/r2J02Z2OpNTctfOSN1Ydgii51I3.jpg",
-                rating: "7.9",
-                anio: 2023,
-                duracion: "2h 30min",
-                genero: "Ciencia Ficción, Aventura",
-                descripcion: "Los Guardianes se embarcan en una misión para proteger a Rocket de su pasado.",
-                director: "James Gunn",
-                reparto: "Chris Pratt, Zoe Saldana, Dave Bautista",
-                embedUrl: "https://vimeos.net/embed-r9w8kqjiq3pb.html"
-            },
-            {
-                titulo: "Super Mario Bros. La película",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg",
-                rating: "7.1",
-                anio: 2023,
-                duracion: "1h 32min",
-                genero: "Animación, Aventura",
-                descripcion: "Mario y Luigi se embarcan en una aventura épica en el Reino Champiñón.",
-                director: "Aaron Horvath, Michael Jelenic",
-                reparto: "Chris Pratt, Anya Taylor-Joy, Jack Black",
-                embedUrl: "https://cuevana3.gs/player.php?t=OMgNIyCGIOmd0hPr3bo_p-NtDaf6Fh91qX3HLQODdnLhJS8tcSARgs1ulTnFzsm8aIZV0blpDQQaABsTn4xSzw&server=vimeos"
-            },
-            {
-                titulo: "Fast X",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/fiVW06jE7z9YnO4trhaMEdclSiC.jpg",
-                rating: "5.9",
-                anio: 2023,
-                duracion: "2h 21min",
-                genero: "Acción, Crimen",
-                descripcion: "Dom Toretto y su familia se enfrentan a un nuevo enemigo del pasado.",
-                director: "Louis Leterrier",
-                reparto: "Vin Diesel, Jason Momoa, Michelle Rodriguez",
-                embedUrl: "https://vimeos.net/embed-ib4j9frlk3bi.html"
-            },
-            {
-                titulo: "Transformers: El despertar de las bestias",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/gPbM0MK8CP8A174rmUwGsADNYKD.jpg",
-                rating: "6.1",
-                anio: 2023,
-                duracion: "2h 7min",
-                genero: "Acción, Ciencia Ficción",
-                descripcion: "Los Autobots se unen a los Maximals para salvar la Tierra.",
-                director: "Steven Caple Jr.",
-                reparto: "Anthony Ramos, Dominique Fishback, Peter Cullen",
-                embedUrl: "https://vimeos.net/embed-wsicrksh3kzw.html"
-            },
-            {
-                titulo: "The Flash",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/rktDFPbfHfUbArZ6OOOKsXcv0Bm.jpg",
-                rating: "6.7",
-                anio: 2023,
-                duracion: "2h 24min",
-                genero: "Acción, Ciencia Ficción",
-                descripcion: "Barry Allen viaja en el tiempo para salvar a su madre, pero altera el futuro.",
-                director: "Andy Muschietti",
-                reparto: "Ezra Miller, Michael Keaton, Sasha Calle",
-                embedUrl: "https://vimeos.net/embed-f93k796ofpv6.html"
-            },
-            {
-                titulo: "Aquaman y el Reino Perdido",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/7lTnXOy0iNtBAdRP3TZvaKJ77F6.jpg",
-                rating: "5.7",
-                anio: 2023,
-                duracion: "2h 4min",
-                genero: "Acción, Fantasía",
-                descripcion: "Aquaman debe proteger la Atlántida de una antigua amenaza.",
-                director: "James Wan",
-                reparto: "Jason Momoa, Patrick Wilson, Amber Heard",
-                embedUrl: "https://vimeos.net/embed-jriijgw0pdum.html"
-            },
-            {
-                titulo: "The Marvels",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/9GBhzXMFjgcZ3FdR9w3bUMMTps5.jpg",
-                rating: "5.6",
-                anio: 2023,
-                duracion: "1h 45min",
-                genero: "Acción, Ciencia Ficción",
-                descripcion: "Carol Danvers, Kamala Khan y Monica Rambeau unen fuerzas para salvar el universo.",
-                director: "Nia DaCosta",
-                reparto: "Brie Larson, Teyonah Parris, Iman Vellani",
-                embedUrl: "https://vimeos.net/embed-oybsudgyo6fi.html"
-            },
-            {
-                titulo: "Indiana Jones y el dial del destino",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/Af4bXE63pVsb2FtbW8uYIyPBadD.jpg",
-                rating: "6.6",
-                anio: 2023,
-                duracion: "2h 34min",
-                genero: "Aventura, Acción",
-                descripcion: "Indiana Jones se embarca en una última aventura para encontrar un antiguo artefacto.",
-                director: "James Mangold",
-                reparto: "Harrison Ford, Phoebe Waller-Bridge, Mads Mikkelsen",
-                embedUrl: "https://vimeos.net/embed-r5vsr7frszen.html"
-            },
-            {
-                titulo: "Elemental",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/4Y1WNkd88JXmGfhtWR7dmDAo1T2.jpg",
-                rating: "6.9",
-                anio: 2023,
-                duracion: "1h 41min",
-                genero: "Animación, Comedia",
-                descripcion: "En una ciudad donde conviven fuego, agua, tierra y aire, una joven de fuego y un chico de agua se conocen.",
-                director: "Peter Sohn",
-                reparto: "Leah Lewis, Mamoudou Athie, Ronnie del Carmen",
-                embedUrl: "https://vimeos.net/embed-j7e93zhr5gls.html"
-            },
-            {
-                titulo: "Venom",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/2uNW4WbgBXL25BAbXGLnLqX71Sw.jpg",
-                rating: "6.7",
-                anio: 2018,
-                duracion: "1h 52min",
-                genero: "Acción, Ciencia Ficción",
-                descripcion: "Un periodista adquiere poderes sobrehumanos tras unirse a un simbionte alienígena.",
-                director: "Ruben Fleischer",
-                reparto: "Tom Hardy, Michelle Williams, Riz Ahmed",
-                embedUrl: "https://vimeos.net/embed-blbnnxp41i0i.html"
-            },
-            {
-                titulo: "Joker",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",
-                rating: "8.4",
-                anio: 2019,
-                duracion: "2h 2min",
-                genero: "Drama, Crimen",
-                descripcion: "Arthur Fleck, un comediante fracasado, se convierte en el Joker tras una serie de eventos trágicos.",
-                director: "Todd Phillips",
-                reparto: "Joaquin Phoenix, Robert De Niro, Zazie Beetz",
-                embedUrl: "https://www.youtube.com/embed/zAGVQLHvwOY"
-            },
-            {
-                titulo: "Parasite",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg",
-                rating: "8.5",
-                anio: 2019,
-                duracion: "2h 12min",
-                genero: "Drama, Thriller",
-                descripcion: "Una familia pobre se infiltra en la vida de una familia rica con consecuencias inesperadas.",
-                director: "Bong Joon-ho",
-                reparto: "Song Kang-ho, Lee Sun-kyun, Cho Yeo-jeong",
-                embedUrl: "https://www.youtube.com/embed/5xH0HfJHsaY"
-            },
-            {
-                titulo: "Whiplash",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/7fn624j5lj3xTme2SgiLCeuedmO.jpg",
-                rating: "8.5",
-                anio: 2014,
-                duracion: "1h 46min",
-                genero: "Drama, Música",
-                descripcion: "Un joven baterista de jazz lucha por alcanzar la grandeza bajo la tutela de un instructor abusivo.",
-                director: "Damien Chazelle",
-                reparto: "Miles Teller, J.K. Simmons, Melissa Benoist",
-                embedUrl: "https://www.youtube.com/embed/7d_jQycdQGo"
-            },
-            {
-                titulo: "Gladiador",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/ty8TGRuvJLPUmAR1H1nRIsgwvim.jpg",
-                rating: "8.5",
-                anio: 2000,
-                duracion: "2h 35min",
-                genero: "Acción, Drama, Historia",
-                descripcion: "Un general romano es traicionado y se convierte en gladiador para vengar la muerte de su familia.",
-                director: "Ridley Scott",
-                reparto: "Russell Crowe, Joaquin Phoenix, Connie Nielsen",
-                embedUrl: "https://www.youtube.com/embed/owK1qxDselE"
-            },
-            {
-                titulo: "Forrest Gump",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/saHP97rTPS5eLmrLQEcANmKrsFl.jpg",
-                rating: "8.8",
-                anio: 1994,
-                duracion: "2h 22min",
-                genero: "Drama, Romance",
-                descripcion: "La vida de Forrest Gump, un hombre con un coeficiente intelectual bajo pero un corazón enorme.",
-                director: "Robert Zemeckis",
-                reparto: "Tom Hanks, Robin Wright, Gary Sinise",
-                embedUrl: "https://www.youtube.com/embed/bLvqoHBptjg"
-            },
-            {
-                titulo: "Matrix",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg",
-                rating: "8.7",
-                anio: 1999,
-                duracion: "2h 16min",
-                genero: "Ciencia Ficción, Acción",
-                descripcion: "Un hacker descubre que la realidad es una simulación creada por máquinas.",
-                director: "Lana Wachowski, Lilly Wachowski",
-                reparto: "Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss",
-                embedUrl: "https://www.youtube.com/embed/vKQi3bBA1y8"
-            },
-            {
-                titulo: "El Padrino",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
-                rating: "9.2",
-                anio: 1972,
-                duracion: "2h 55min",
-                genero: "Drama, Crimen",
-                descripcion: "La historia de la familia Corleone y su imperio criminal.",
-                director: "Francis Ford Coppola",
-                reparto: "Marlon Brando, Al Pacino, James Caan",
-                embedUrl: "https://www.youtube.com/embed/sY1S34973zA"
-            },
-            {
-                titulo: "Pulp Fiction",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg",
-                rating: "8.9",
-                anio: 1994,
-                duracion: "2h 34min",
-                genero: "Crimen, Drama",
-                descripcion: "Historias entrelazadas de crimen y redención en Los Ángeles.",
-                director: "Quentin Tarantino",
-                reparto: "John Travolta, Uma Thurman, Samuel L. Jackson",
-                embedUrl: "https://www.youtube.com/embed/s7EdQ4FqbhY"
-            },
-            {
-                titulo: "Titanic",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/9xjZS2rlVxm8wsxoo70uFGT7X4.jpg",
-                rating: "7.9",
-                anio: 1997,
-                duracion: "3h 14min",
-                genero: "Drama, Romance",
-                descripcion: "Una historia de amor prohibido a bordo del Titanic.",
-                director: "James Cameron",
-                reparto: "Leonardo DiCaprio, Kate Winslet, Billy Zane",
-                embedUrl: "https://www.youtube.com/embed/kVrqfYjkTdQ"
-            },
-            {
-                titulo: "Jurassic Park",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/oU7Oq2kFAAlGqbU4VoAE36g4hoI.jpg",
-                rating: "8.2",
-                anio: 1993,
-                duracion: "2h 7min",
-                genero: "Ciencia Ficción, Aventura",
-                descripcion: "Un parque temático con dinosaurios clonados se convierte en una pesadilla.",
-                director: "Steven Spielberg",
-                reparto: "Sam Neill, Laura Dern, Jeff Goldblum",
-                embedUrl: "https://www.youtube.com/embed/QWBKEmWWL38"
-            },
-            {
-                titulo: "El Señor de los Anillos: La Comunidad del Anillo",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg",
-                rating: "8.9",
-                anio: 2001,
-                duracion: "2h 58min",
-                genero: "Fantasía, Aventura",
-                descripcion: "Un hobbit y ocho compañeros emprenden un viaje para destruir un anillo poderoso.",
-                director: "Peter Jackson",
-                reparto: "Elijah Wood, Ian McKellen, Viggo Mortensen",
-                embedUrl: "https://www.youtube.com/embed/V75dMMIW2B4"
-            },
-            {
-                titulo: "Harry Potter y la Piedra Filosofal",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/wuMc08IPKEatf9rnMNXvIDxqP4W.jpg",
-                rating: "7.6",
-                anio: 2001,
-                duracion: "2h 32min",
-                genero: "Fantasía, Aventura",
-                descripcion: "Un niño descubre que es un mago y asiste a una escuela de magia.",
-                director: "Chris Columbus",
-                reparto: "Daniel Radcliffe, Emma Watson, Rupert Grint",
-                embedUrl: "https://www.youtube.com/embed/VyHV0BRtdxo"
-            },
-            {
-                titulo: "Star Wars: Una Nueva Esperanza",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg",
-                rating: "8.6",
-                anio: 1977,
-                duracion: "2h 1min",
-                genero: "Ciencia Ficción, Aventura",
-                descripcion: "Luke Skywalker se une a la Rebelión para salvar a la galaxia del Imperio.",
-                director: "George Lucas",
-                reparto: "Mark Hamill, Harrison Ford, Carrie Fisher",
-                embedUrl: "https://www.youtube.com/embed/vZ734NWnAHA"
-            },
-            {
-                titulo: "El Rey León",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/sKCr78MXSLixwmZ8DyJLrpMsd15.jpg",
-                rating: "8.5",
-                anio: 1994,
-                duracion: "1h 28min",
-                genero: "Animación, Drama",
-                descripcion: "Un joven león huye de su hogar tras la muerte de su padre.",
-                director: "Roger Allers, Rob Minkoff",
-                reparto: "Matthew Broderick, Jeremy Irons, James Earl Jones",
-                embedUrl: "https://www.youtube.com/embed/lFzVJEksoDY"
-            },
-            {
-                titulo: "Toy Story",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/uXDfjJbdP4ijW5hWSBrPrlKpxab.jpg",
-                rating: "8.3",
-                anio: 1995,
-                duracion: "1h 21min",
-                genero: "Animación, Comedia",
-                descripcion: "Los juguetes de un niño cobran vida cuando no están presentes.",
-                director: "John Lasseter",
-                reparto: "Tom Hanks, Tim Allen, Don Rickles",
-                embedUrl: "https://www.youtube.com/embed/KYz2wyBy3kc"
-            },
-            {
-                titulo: "Buscando a Nemo",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/eHuGQ10FUzK1mdOY69wF5pGgEf5.jpg",
-                rating: "8.2",
-                anio: 2003,
-                duracion: "1h 40min",
-                genero: "Animación, Aventura",
-                descripcion: "Un pez payaso emprende un viaje para encontrar a su hijo.",
-                director: "Andrew Stanton",
-                reparto: "Albert Brooks, Ellen DeGeneres, Alexander Gould",
-                embedUrl: "https://www.youtube.com/embed/SPHfeNgogVs"
-            },
-            {
-                titulo: "Up",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/mFvoEwSfLqbcONb5SxA8Cmp6J9W.jpg",
-                rating: "8.3",
-                anio: 2009,
-                duracion: "1h 36min",
-                genero: "Animación, Aventura",
-                descripcion: "Un anciano ata globos a su casa y vuela a Sudamérica con un joven explorador.",
-                director: "Pete Docter, Bob Peterson",
-                reparto: "Ed Asner, Christopher Plummer, Jordan Nagai",
-                embedUrl: "https://www.youtube.com/embed/HWEW_qTLSEE"
-            },
-            {
-                titulo: "Coco",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/gGEsBPAijhVUFoiNpg5qBXpV4je.jpg",
-                rating: "8.4",
-                anio: 2017,
-                duracion: "1h 45min",
-                genero: "Animación, Música",
-                descripcion: "Un niño viaja al mundo de los muertos para descubrir la verdad sobre su familia.",
-                director: "Lee Unkrich, Adrian Molina",
-                reparto: "Anthony Gonzalez, Gael García Bernal, Benjamin Bratt",
-                embedUrl: "https://www.youtube.com/embed/Rvr68u6k5sI"
-            },
-            {
-                titulo: "Mad Max: Furia en el camino",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/hA2ple9q4qnwxp3hKVNhroipsir.jpg",
-                rating: "8.1",
-                anio: 2015,
-                duracion: "2h 0min",
-                genero: "Acción, Ciencia Ficción",
-                descripcion: "En un mundo post-apocalíptico, Max se une a Furiosa para escapar de un tirano.",
-                director: "George Miller",
-                reparto: "Tom Hardy, Charlize Theron, Nicholas Hoult",
-                embedUrl: "https://www.youtube.com/embed/hEJnMQG9ev8"
-            },
-            {
-                titulo: "El Silencio de los Inocentes",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/uS9m8OBk1A8eM9I042bx8XXpqAq.jpg",
-                rating: "8.6",
-                anio: 1991,
-                duracion: "1h 58min",
-                genero: "Thriller, Crimen",
-                descripcion: "Una joven del FBI busca la ayuda de un asesino caníbal para atrapar a otro asesino.",
-                director: "Jonathan Demme",
-                reparto: "Jodie Foster, Anthony Hopkins, Scott Glenn",
-                embedUrl: "https://www.youtube.com/embed/W6Mm8Sbe__o"
-            },
-            {
-                titulo: "El Resplandor",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/nRj4NfJZZo5v6lY2Nzp4mk7MqLf.jpg",
-                rating: "8.4",
-                anio: 1980,
-                duracion: "2h 26min",
-                genero: "Terror, Drama",
-                descripcion: "Un escritor y su familia se aíslan en un hotel embrujado durante el invierno.",
-                director: "Stanley Kubrick",
-                reparto: "Jack Nicholson, Shelley Duvall, Danny Lloyd",
-                embedUrl: "https://www.youtube.com/embed/5Cb3ik6zP2I"
-            },
-            {
-                titulo: "Alien",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/vfrQk5IPloGg1v9Rzbh2Eg3VGyM.jpg",
-                rating: "8.5",
-                anio: 1979,
-                duracion: "1h 57min",
-                genero: "Ciencia Ficción, Terror",
-                descripcion: "La tripulación de una nave espacial se enfrenta a una criatura alienígena mortal.",
-                director: "Ridley Scott",
-                reparto: "Sigourney Weaver, Tom Skerritt, John Hurt",
-                embedUrl: "https://www.youtube.com/embed/LjLamj-b0I8"
-            },
-            {
-                titulo: "Terminator 2",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/5M0j0B18abtBI5gi2RhfjjLHWDV.jpg",
-                rating: "8.6",
-                anio: 1991,
-                duracion: "2h 17min",
-                genero: "Acción, Ciencia Ficción",
-                descripcion: "Un cyborg es enviado para proteger a John Connor de un Terminator más avanzado.",
-                director: "James Cameron",
-                reparto: "Arnold Schwarzenegger, Linda Hamilton, Edward Furlong",
-                embedUrl: "https://www.youtube.com/embed/CRRlbK5w8AE"
-            },
-            {
-                titulo: "Scarface",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/iQ5ztdjvteGeboUtKPvHvZbfsS2.jpg",
-                rating: "8.3",
-                anio: 1983,
-                duracion: "2h 50min",
-                genero: "Crimen, Drama",
-                descripcion: "Un inmigrante cubano se convierte en un poderoso narcotraficante en Miami.",
-                director: "Brian De Palma",
-                reparto: "Al Pacino, Michelle Pfeiffer, Steven Bauer",
-                embedUrl: "https://www.youtube.com/embed/5p0QtJMKt1s"
-            },
-            {
-                titulo: "Rocky",
-                poster: "https://image.tmdb.org/t/p/w600_and_h900_face/4siT5c8pxT9f6JXQvT7cD7XQ9Jt.jpg",
-                rating: "8.1",
-                anio: 1976,
-                duracion: "2h 0min",
-                genero: "Drama, Deportes",
-                descripcion: "Un boxeador de poca monta tiene la oportunidad de luchar por el título mundial.",
-                director: "John G. Avildsen",
-                reparto: "Sylvester Stallone, Talia Shire, Burt Young",
-                embedUrl: "https://www.youtube.com/embed/7RYpJAUMo2M"
-            }
-        ];
+    <!-- BOTÓN ADMIN -->
+    <div class="admin-trigger" id="adminTrigger" title="Panel de Administración (Ctrl+Shift+A)">
+        ⚙️
+    </div>
 
-        // Base de datos de series
-        const series = [
-            {
-                titulo: "Breaking Bad",
-                poster: "https://image.tmdb.org/t/p/w500/ggFHVNu6YYI5L9pCfOacjizRGt.jpg",
-                rating: "9.5",
-                anio: 2008,
-                genero: "Drama, Crimen, Thriller",
-                descripcion: "Un profesor de química diagnosticado con cáncer terminal se asocia con un exalumno para fabricar y vender metanfetamina.",
-                creador: "Vince Gilligan",
-                reparto: "Bryan Cranston, Aaron Paul, Anna Gunn",
-                temporadas: [
-                    {
-                        numero: 1,
-                        anio: 2008,
-                        capitulos: [
-                            { numero: 1, nombre: "Piloto", duracion: "58 min", embedUrl: "https://www.youtube.com/embed/BREAKING_BAD_T1_E1" },
-                            { numero: 2, nombre: "El gato en la bolsa", duracion: "48 min", embedUrl: "https://www.youtube.com/embed/BREAKING_BAD_T1_E2" },
-                            { numero: 3, nombre: "...Y la bolsa en el río", duracion: "48 min", embedUrl: "https://www.youtube.com/embed/BREAKING_BAD_T1_E3" },
-                            { numero: 4, nombre: "Hombre con cáncer", duracion: "48 min", embedUrl: "https://www.youtube.com/embed/BREAKING_BAD_T1_E4" },
-                            { numero: 5, nombre: "Materia gris", duracion: "48 min", embedUrl: "https://www.youtube.com/embed/BREAKING_BAD_T1_E5" },
-                            { numero: 6, nombre: "Locura de mercado", duracion: "47 min", embedUrl: "https://www.youtube.com/embed/BREAKING_BAD_T1_E6" },
-                            { numero: 7, nombre: "Trato no violento", duracion: "47 min", embedUrl: "https://www.youtube.com/embed/BREAKING_BAD_T1_E7" }
-                        ]
-                    }
-                ]
-            },
-            {
-                titulo: "Stranger Things",
-                poster: "https://image.tmdb.org/t/p/w500/49WJfeN0moxb9IPfGn8AIqMGskD.jpg",
-                rating: "8.7",
-                anio: 2016,
-                genero: "Ciencia Ficción, Terror, Drama",
-                descripcion: "Cuando un niño desaparece, sus amigos y familia se ven envueltos en eventos sobrenaturales.",
-                creador: "The Duffer Brothers",
-                reparto: "Millie Bobby Brown, Finn Wolfhard, David Harbour",
-                temporadas: [
-                    {
-                        numero: 1,
-                        anio: 2016,
-                        capitulos: [
-                            { numero: 1, nombre: "La desaparición de Will Byers", duracion: "48 min", embedUrl: "https://www.youtube.com/embed/STRANGER_THINGS_T1_E1" },
-                            { numero: 2, nombre: "La loca de Maple Street", duracion: "56 min", embedUrl: "https://www.youtube.com/embed/STRANGER_THINGS_T1_E2" },
-                            { numero: 3, nombre: "Todo está bien", duracion: "52 min", embedUrl: "https://www.youtube.com/embed/STRANGER_THINGS_T1_E3" },
-                            { numero: 4, nombre: "El cuerpo", duracion: "50 min", embedUrl: "https://www.youtube.com/embed/STRANGER_THINGS_T1_E4" },
-                            { numero: 5, nombre: "La pulga y el acróbata", duracion: "53 min", embedUrl: "https://www.youtube.com/embed/STRANGER_THINGS_T1_E5" },
-                            { numero: 6, nombre: "El monstruo", duracion: "47 min", embedUrl: "https://www.youtube.com/embed/STRANGER_THINGS_T1_E6" },
-                            { numero: 7, nombre: "La bañera", duracion: "42 min", embedUrl: "https://www.youtube.com/embed/STRANGER_THINGS_T1_E7" },
-                            { numero: 8, nombre: "El otro lado", duracion: "55 min", embedUrl: "https://www.youtube.com/embed/STRANGER_THINGS_T1_E8" }
-                        ]
-                    }
-                ]
-            }
-        ];
+    <!-- PANEL ADMIN - OCULTO POR DEFECTO -->
+    <div id="adminPanel" style="display: none;">
+        <div class="admin-box">
+            <div class="admin-header">
+                <h2>⚙️ Panel de Administración</h2>
+                <button class="admin-close" onclick="cerrarAdmin()">×</button>
+            </div>
 
-        let serieActual = null;
-
-        function crearTarjeta(item) {
-            const card = document.createElement('div');
-            card.className = 'movie-card';
-            card.tabIndex = 0;
-            card.setAttribute('role', 'button');
-            card.setAttribute('aria-label', `Ver ${item.titulo}`);
-            
-            card.onclick = function() { openModal(item); };
-            card.onkeydown = function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    openModal(item);
-                }
-            };
-            
-            const generoMostrado = Array.isArray(item.genero) ? item.genero.join(', ') : item.genero;
-            
-            card.innerHTML = `
-                <div class="movie-poster-wrapper">
-                    <img src="${item.poster}" alt="${item.titulo}" class="movie-poster" 
-                         onerror="this.src='https://via.placeholder.com/250x370/333333/ffffff?text=${encodeURIComponent(item.titulo)}'">
+            <!-- LOGIN - VISIBLE POR DEFECTO CUANDO SE ABRE EL PANEL -->
+            <div id="loginAdmin" class="admin-login" style="display: block;">
+                <p>🔐 Ingresa la contraseña para administrar el catálogo:</p>
+                <div class="input-group">
+                    <input type="password" id="claveAdmin" placeholder="Contraseña..." autocomplete="off">
+                    <button class="btn-acceder" onclick="verificarClave()">Acceder</button>
                 </div>
-                <div class="movie-info">
-                    <h3 class="movie-title">${item.titulo}</h3>
-                    <p class="movie-rating">⭐ ${item.rating} | ${item.anio}</p>
-                    <p class="movie-genre">${generoMostrado || ''}</p>
+                <div class="error-clave" id="errorClave" style="display: none;">❌ Contraseña incorrecta</div>
+            </div>
+
+            <!-- FORMULARIO - OCULTO POR DEFECTO -->
+            <div id="formularioAdmin" class="admin-form" style="display: none;">
+                <div class="success-msg">✅ Acceso concedido - Puedes agregar o eliminar películas</div>
+
+                <!-- TABS -->
+                <div class="admin-tabs">
+                    <button class="active" onclick="cambiarTab('peliculas')">🎬 Películas</button>
+                    <button onclick="cambiarTab('series')">📺 Series</button>
                 </div>
-            `;
-            
-            return card;
-        }
 
-        function cargarPeliculas() {
-            const movieGrid = document.getElementById('movieGrid');
-            const terrorGrid = document.getElementById('terrorGrid');
-            const seriesGrid = document.getElementById('seriesGrid');
-
-            // Limpiar grids
-            movieGrid.innerHTML = '';
-            terrorGrid.innerHTML = '';
-            seriesGrid.innerHTML = '';
-
-            // Películas
-            peliculas.forEach(pelicula => {
-                const esTerror = typeof pelicula.genero === 'string' &&
-                    pelicula.genero.toLowerCase().includes('terror');
-
-                if (esTerror) {
-                    terrorGrid.appendChild(crearTarjeta(pelicula));
-                } else {
-                    movieGrid.appendChild(crearTarjeta(pelicula));
-                }
-            });
-
-            // Series
-            series.forEach(serie => {
-                seriesGrid.appendChild(crearTarjeta(serie));
-            });
-        }
-
-        function openModal(item) {
-            const modal = document.getElementById('videoModal');
-            const modalBody = document.getElementById('modalBody');
-            
-            if (item.temporadas && item.temporadas.length > 0) {
-                serieActual = item;
-                mostrarSerie(item, modalBody);
-            } else {
-                mostrarPelicula(item, modalBody);
-            }
-            
-            modal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-            modal.scrollTop = 0;
-        }
-
-        function mostrarPelicula(pelicula, contenedor) {
-            const generoMostrado = Array.isArray(pelicula.genero) ? pelicula.genero.join(', ') : pelicula.genero;
-            
-            contenedor.innerHTML = `
-                <div class="modal-details">
-                    <h2 class="modal-title">${pelicula.titulo}</h2>
-                    <div class="modal-meta">
-                        <span class="modal-meta-item">⭐ ${pelicula.rating}</span>
-                        <span class="modal-meta-item">📅 ${pelicula.anio}</span>
-                        <span class="modal-meta-item">⏱️ ${pelicula.duracion}</span>
-                        <span class="modal-meta-item">🎭 ${generoMostrado}</span>
+                <!-- FORMULARIO PELÍCULAS -->
+                <div id="tabPeliculas">
+                    <div class="form-group">
+                        <label>Título <span class="required">*</span></label>
+                        <input type="text" id="adminTitulo" placeholder="Ej: Inception">
                     </div>
-                    <p class="modal-description">${pelicula.descripcion}</p>
-                    
-                    <div class="info-adicional">
-                        <h3>Información Adicional</h3>
-                        <p><strong>Director:</strong> ${pelicula.director}</p>
-                        <p><strong>Reparto:</strong> ${pelicula.reparto}</p>
+
+                    <div class="form-group">
+                        <label>URL del Poster <span class="required">*</span></label>
+                        <input type="text" id="adminPoster" placeholder="https://image.tmdb.org/t/p/w500/...">
                     </div>
-                    
-                    <div class="video-container">
-                        <iframe src="${pelicula.embedUrl}" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen>
-                        </iframe>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Género <span class="required">*</span></label>
+                            <input type="text" id="adminGenero" placeholder="Acción, Ciencia Ficción">
+                        </div>
+                        <div class="form-group">
+                            <label>Año <span class="required">*</span></label>
+                            <input type="number" id="adminAnio" placeholder="2024">
+                        </div>
                     </div>
+
+                    <div class="form-group">
+                        <label>Duración</label>
+                        <input type="text" id="adminDuracion" placeholder="2h 30min">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Director</label>
+                            <input type="text" id="adminDirector" placeholder="Christopher Nolan">
+                        </div>
+                        <div class="form-group">
+                            <label>Reparto</label>
+                            <input type="text" id="adminReparto" placeholder="Actor1, Actor2, Actor3">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>URL del Video <span class="required">*</span></label>
+                        <input type="text" id="adminVideo" placeholder="https://vimeos.net/embed-xxx.html">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <textarea id="adminDescripcion" placeholder="Sinopsis de la película..." rows="3"></textarea>
+                    </div>
+
+                    <button class="btn-agregar" onclick="agregarPelicula()">➕ Agregar Película</button>
                 </div>
-            `;
-        }
 
-        function mostrarSerie(serie, contenedor) {
-            contenedor.innerHTML = `
-                <div class="modal-details">
-                    <h2 class="modal-title">${serie.titulo}</h2>
-                    <div class="modal-meta">
-                        <span class="modal-meta-item">⭐ ${serie.rating}</span>
-                        <span class="modal-meta-item">📅 ${serie.anio}</span>
-                        <span class="modal-meta-item">🎭 ${serie.genero}</span>
-                        <span class="modal-meta-item">📺 ${serie.temporadas.length} Temporadas</span>
+                <!-- FORMULARIO SERIES -->
+                <div id="tabSeries" style="display: none;">
+                    <div class="form-group">
+                        <label>Título de la Serie <span class="required">*</span></label>
+                        <input type="text" id="adminSerieTitulo" placeholder="Ej: Breaking Bad">
                     </div>
-                    <p class="modal-description">${serie.descripcion}</p>
-                    
-                    <div class="info-adicional">
-                        <h3>Información Adicional</h3>
-                        <p><strong>Creador:</strong> ${serie.creador}</p>
-                        <p><strong>Reparto:</strong> ${serie.reparto}</p>
+
+                    <div class="form-group">
+                        <label>URL del Poster <span class="required">*</span></label>
+                        <input type="text" id="adminSeriePoster" placeholder="https://image.tmdb.org/t/p/w500/...">
                     </div>
-                    
-                    <div class="temporadas-container">
-                        <h3>📋 Temporadas y Capítulos</h3>
-                        ${serie.temporadas.map(temporada => `
-                            <div class="temporada-section">
-                                <div class="temporada-header" onclick="toggleCapitulos(${temporada.numero})">
-                                    <span class="temporada-title">Temporada ${temporada.numero} (${temporada.anio})</span>
-                                    <span class="temporada-info">${temporada.capitulos.length} capítulos ▼</span>
-                                </div>
-                                <div class="capitulos-container" id="capitulos-${temporada.numero}">
-                                    ${temporada.capitulos.map(capitulo => `
-                                        <div class="capitulo-item" onclick="reproducirCapitulo(${temporada.numero}, ${capitulo.numero})">
-                                            <div class="capitulo-numero-badge">${capitulo.numero}</div>
-                                            <div class="capitulo-info">
-                                                <div class="capitulo-nombre">${capitulo.nombre}</div>
-                                                <div class="capitulo-duracion">⏱️ ${capitulo.duracion}</div>
-                                            </div>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        `).join('')}
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Género <span class="required">*</span></label>
+                            <input type="text" id="adminSerieGenero" placeholder="Drama, Crimen, Thriller">
+                        </div>
+                        <div class="form-group">
+                            <label>Año <span class="required">*</span></label>
+                            <input type="number" id="adminSerieAnio" placeholder="2008">
+                        </div>
                     </div>
+
+                    <div class="form-group">
+                        <label>Creador</label>
+                        <input type="text" id="adminSerieCreador" placeholder="Vince Gilligan">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Reparto</label>
+                        <input type="text" id="adminSerieReparto" placeholder="Bryan Cranston, Aaron Paul, Anna Gunn">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <textarea id="adminSerieDescripcion" placeholder="Sinopsis de la serie..." rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Número de Temporada <span class="required">*</span></label>
+                        <input type="number" id="adminSerieTemporada" placeholder="1" min="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Año de la Temporada</label>
+                        <input type="number" id="adminSerieTemporadaAnio" placeholder="2008">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nombres de los capítulos <span class="required">*</span></label>
+                        <input type="text" id="adminSerieCapitulos" placeholder="Piloto, El gato en la bolsa, ...">
+                        <small style="color: #666; font-size: 12px;">Separados por comas</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>URLs de los capítulos <span class="required">*</span></label>
+                        <input type="text" id="adminSerieUrls" placeholder="https://vimeos.net/embed-1.html, https://vimeos.net/embed-2.html">
+                        <small style="color: #666; font-size: 12px;">En el mismo orden que los nombres, separados por comas</small>
+                    </div>
+
+                    <button class="btn-agregar" onclick="agregarSerie()">➕ Agregar Serie</button>
                 </div>
-            `;
-        }
 
-        function toggleCapitulos(numeroTemporada) {
-            const contenedor = document.getElementById(`capitulos-${numeroTemporada}`);
-            if (contenedor) {
-                contenedor.classList.toggle('activo');
-            }
-        }
+                <hr class="admin-divider">
 
-        function reproducirCapitulo(numeroTemporada, numeroCapitulo) {
-            if (!serieActual) return;
-            
-            const temporada = serieActual.temporadas.find(t => t.numero === numeroTemporada);
-            if (!temporada) return;
-            
-            const capitulo = temporada.capitulos.find(c => c.numero === numeroCapitulo);
-            if (!capitulo) return;
-            
-            const modalBody = document.getElementById('modalBody');
-            
-            modalBody.innerHTML = `
-                <div class="modal-details">
-                    <button class="btn-volver" onclick="volverASerie()">← Volver a la serie</button>
-                    
-                    <h2 class="modal-title">${serieActual.titulo}</h2>
-                    <p style="color: var(--primary); font-size: 18px; margin-bottom: 20px;">
-                        Temporada ${numeroTemporada} - Episodio ${numeroCapitulo}: ${capitulo.nombre}
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3 style="color: var(--text-muted); font-size: 18px; margin: 0;">📋 Catálogo</h3>
+                    <span class="badge-count" id="contadorPeliculas"></span>
+                </div>
+
+                <div class="peliculas-lista" id="listaPeliculasAdmin"></div>
+
+                <!-- ===== BOTÓN DE EXPORTAR ===== -->
+                <hr class="admin-divider">
+                
+                <button class="btn-exportar" onclick="exportarHTML()">
+                    💾 Guardar en el código y descargar HTML
+                </button>
+                <p style="color: #666; font-size: 12px; margin-top: 8px; text-align:center;">
+                    Descarga un archivo HTML con TODAS las películas guardadas permanentemente en el código.
+                    <br>✅ Al abrirlo, las películas aparecerán sin necesidad de localStorage.
+                </p>
+
+                <div style="margin-top: 15px; padding: 12px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+                    <p style="color: #666; font-size: 12px; margin: 0;">
+                        💡 <strong>Importante:</strong> Cada vez que agregues una película, usa el botón "Guardar en el código y descargar HTML".
+                        Luego sube el archivo descargado a tu hosting para que los cambios sean permanentes.
                     </p>
-                    
-                    <div class="video-container">
-                        <iframe src="${capitulo.embedUrl}" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen>
-                        </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // ================================================================
+    // BASE DE DATOS DE PELÍCULAS
+    // ================================================================
+    const peliculas = [{"titulo":"Five Nights at Freddy's","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/t6RSJ1z8bDEYpk4fLwxfkXciUak.jpg","rating":"8.9","anio":2023,"duracion":"1h 49min","genero":"Terror, Suspenso","descripcion":"Un hombre comienza un trabajo como guardia de seguridad nocturno en el restaurante Freddy Fazbear's Pizza, donde descubre que los animatrónicos se mueven por la noche y matan a cualquiera que vean.","director":"Emma Tammi","reparto":"Josh Hutcherson, Piper Rubio, Elizabeth Lail, Matthew Lillard","embedUrl":"https://cuevana3.gs/player.php?t=Y0NDOpzHJ_hyxx3Wwx9gMMOGt6Ak6fB8u8OT-6RaOjOqiq60A8B0EI8hCFdcG2xnV-c744pnz2OWPNCZREC3sA&server=vimeos"},{"titulo":"Spider-Man: Cruzando el Multiverso","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/37WcNMgNOMxdhT87MFl7tq7FM1.jpg","rating":"8.2","anio":2023,"duracion":"2h 29min","genero":"Animación, Acción, Aventura","descripcion":"Miles Morales se reencuentra con Gwen y viaja por el Multiverso, donde conoce a otros Spider-Man.","director":"Joaquim Dos Santos, Kemp Powers","reparto":"Shameik Moore, Hailee Steinfeld, Brian Tyree Henry","embedUrl":"https://cuevana3.gs/player.php?t=xKOsQ8H3ZDFx8veUA1HrDzUQmh-rKa2Qj2vuAhxXxL0rEubDKDxco1i6rAuiHN8A5qaX2V6BQgCmBTYCzsie6Q&server=vimeos"},{"titulo":"Spider-Man: De regreso a casa","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/bRl6C6FwzTndk0MBGZZ68nRFlw3.jpg","rating":"8.6","anio":2017,"duracion":"2h 13min","genero":"Acción, Aventura","descripcion":"Peter Parker intenta equilibrar su vida como estudiante y superhéroe mientras recibe la guía de Tony Stark.","director":"Jon Watts","reparto":"Tom Holland, Michael Keaton, Robert Downey Jr.","embedUrl":"https://cuevana3.gs/player.php?t=tov-i_0JzseLHwY64zAPCTS5CQuwa15Thx-vezxQo7B_YVjnRvRujzOVSZNXxvWH7C8buAtM98_c33-FiXgCsA&server=vimeos"},{"titulo":"Super Mario Galaxy la película","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/79EVB4qhyfrdlMgT8GIRAikdzsQ.jpg","rating":"7.8","anio":2026,"duracion":"1h 38min","genero":"Familia, Comedia, Aventura, Fantasía, y Animación","descripcion":"Tras frustrar el plan previo de Bowser para casarse con la princesa Peach, Mario y Luigi se enfrentan ahora a una nueva amenaza en Bowser Jr.","director":"Aaron Horvath y Michael Jelenic","reparto":"Chris Pratt (Mario), Charlie Day (Luigi), Anya Taylor-Joy (Peach), Jack Black (Bowser)","embedUrl":"https://vimeos.net/embed-v7hdakih9470.html"},{"titulo":"Avatar: Fuego y ceniza","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/4n1U0Mwn7djux6VKNYDRWPgS2x6.jpg","rating":"7.8","anio":2025,"duracion":"3h 17min","genero":"Ciencia ficción, Aventura, y Fantasía","descripcion":"Jake Sully y Neytiri deben proteger a su familia y a Pandora de los Ash People.","director":"James Cameron","reparto":"Sam Worthington (Jake Sully), Zoe Saldaña (Neytiri), Sigourney Weaver (Kiri)","embedUrl":"https://vimeos.net/embed-t0asskfapj18.html"},{"titulo":"Backrooms: Sin salida","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/rhGx6E3qRNMgj3i5su2oukNHwIQ.jpg","rating":"8.4","anio":2026,"duracion":"1h 51min","genero":"Terror, Misterio y Ciencia Ficción","descripcion":"Aparece una puerta extraña en el sótano de una sala de exposiciones de muebles.","director":"Kane Parsons","reparto":"Chiwetel Ejiofor, Renate Reinsve, Mark Duplass","embedUrl":"https://vimeos.net/embed-bv19oh01kdb9.html"},{"titulo":"Saw X","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/u7Lp1Hi8aBS73jv4KRMIv5aK4ax.jpg","rating":"8.5","anio":2023,"duracion":"2h 32min","genero":"Terror y misterio","descripcion":"John Kramer viaja a México buscando un tratamiento experimental, pero descubre que todo es una estafa.","director":"Kevin Greutert","reparto":"Tobin Bell, Shawnee Smith, Synnøve Macody Lund","embedUrl":"https://vimeos.net/embed-7rz3zvwg7o9e.html"},{"titulo":"Minions & Monsters","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/nz7i42yhLIJ4ve9JKgM6NthoLHO.jpg","rating":"8.6","anio":2026,"duracion":"1h 30min","genero":"Aventura, Animación, Comedia","descripcion":"La historia de cómo los Minions conquistaron Hollywood y desataron monstruos en el mundo.","director":"Pierre Coffin","reparto":"Trey Parker, Allison Janney, Christoph Waltz","embedUrl":"https://cuevana3.gs/player.php?t=PJttLDfDgPR-Ow-KH7_47q5lve6wHZmCFbLyksZh0r6vKu6AVyH6ph9dAn2cz6wwaBkXsVBLGpKDYSSQCfe-aQ&server=vimeos"},{"titulo":"Jurassic World Rebirth","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/1RICxzeoNCAO5NpcRMIgg1XT6fm.jpg","rating":"8.9","anio":2025,"duracion":"2h 46min","genero":"Ciencia Ficción, Aventura y Acción","descripcion":"Zora Bennett lidera una misión secreta para obtener material genético de tres enormes dinosaurios.","director":"Gareth Edwards","reparto":"Scarlett Johansson, Mahershala Ali, Jonathan Bailey","embedUrl":"https://vimeos.net/embed-p7mkty83khe9.html"},{"titulo":"Evil Dead Rise","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/5ik4ATKmNtmJU6AYD0bLm56BCVM.jpg","rating":"8.2","anio":2023,"duracion":"1h 36min","genero":"Terror y Thriller","descripcion":"Un reencuentro entre dos hermanas distanciadas se ve truncado por el surgimiento de demonios poseedores de carne.","director":"Lee Cronin","reparto":"Lily Sullivan, Alyssa Sutherland, Morgan Davies","embedUrl":"https://cuevana3.gs/player.php?t=BO5oncwwFQZhpi_vRWGFxgUOSqaCtcn3BD6Qf5ombZ39xB6AEN7vuC2-te7KW_PDnvPK1V8mc6SYjPrqrszdqQ&server=vimeos"},{"titulo":"Bad Boys para Siempre","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/y95lQLnuNKdPAzw9F9Ab8kJ80c3.jpg","rating":"8.3","anio":2020,"duracion":"2h 4min","genero":"Thriller, Acción y Crimen","descripcion":"Marcus y Mike regresan a la acción junto al nuevo equipo AMMO para enfrentarse a Armando Armas.","director":"Adil El Arbi y Bilall Fallah","reparto":"Will Smith, Martin Lawrence, Vanessa Hudgens","embedUrl":"https://vimeos.net/embed-cg3mcmop1ct4.html"},{"titulo":"Barbie","poster":"https://image.tmdb.org/t/p/w600_and_h900_face/iuFNMS8U5cb6xfzi51Dbkovj7vM.jpg","rating":"7.0","anio":2023,"duracion":"1h 54min","genero":"Comedia, Fantasía","descripcion":"Barbie vive en Barbieland hasta que es expulsada al mundo real por no ser perfecta.","director":"Greta Gerwig","reparto":"Margot Robbie, Ryan Gosling, America Ferrera","embedUrl":"https://vimeos.net/embed-nvnyl2mw5s34.html"},{"titulo":"John Wick 4","poster":"https://image.tmdb.org/t/p/w600_and_h900_face/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg","rating":"7.7","anio":2023,"duracion":"2h 49min","genero":"Acción, Crimen","descripcion":"John Wick descubre un camino para derrotar a la Alta Mesa, pero debe enfrentar a un nuevo enemigo.","director":"Chad Stahelski","reparto":"Keanu Reeves, Donnie Yen, Bill Skarsgård","embedUrl":"https://vimeos.net/embed-f4tp8s5fk17z.html"},{"titulo":"Mission: Impossible - Dead Reckoning","poster":"https://image.tmdb.org/t/p/w600_and_h900_face/NNxYkU70HPurnNCSiCjYAmacwm.jpg","rating":"7.8","anio":2023,"duracion":"2h 43min","genero":"Acción, Aventura","descripcion":"Ethan Hunt y su equipo deben encontrar una peligrosa arma antes de que caiga en manos equivocadas.","director":"Christopher McQuarrie","reparto":"Tom Cruise, Hayley Atwell, Ving Rhames","embedUrl":"https://vimeos.net/embed-d45hedrv1by8.html"},{"titulo":"Guardianes de la Galaxia Vol. 3","poster":"https://image.tmdb.org/t/p/w600_and_h900_face/r2J02Z2OpNTctfOSN1Ydgii51I3.jpg","rating":"7.9","anio":2023,"duracion":"2h 30min","genero":"Ciencia Ficción, Aventura","descripcion":"Los Guardianes se embarcan en una misión para proteger a Rocket de su pasado.","director":"James Gunn","reparto":"Chris Pratt, Zoe Saldana, Dave Bautista","embedUrl":"https://vimeos.net/embed-r9w8kqjiq3pb.html"},{"titulo":"Super Mario Bros. La película","poster":"https://image.tmdb.org/t/p/w600_and_h900_face/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg","rating":"7.1","anio":2023,"duracion":"1h 32min","genero":"Animación, Aventura","descripcion":"Mario y Luigi se embarcan en una aventura épica en el Reino Champiñón.","director":"Aaron Horvath, Michael Jelenic","reparto":"Chris Pratt, Anya Taylor-Joy, Jack Black","embedUrl":"https://cuevana3.gs/player.php?t=OMgNIyCGIOmd0hPr3bo_p-NtDaf6Fh91qX3HLQODdnLhJS8tcSARgs1ulTnFzsm8aIZV0blpDQQaABsTn4xSzw&server=vimeos"},{"titulo":"Fast X","poster":"https://image.tmdb.org/t/p/w600_and_h900_face/fiVW06jE7z9YnO4trhaMEdclSiC.jpg","rating":"5.9","anio":2023,"duracion":"2h 21min","genero":"Acción, Crimen","descripcion":"Dom Toretto y su familia se enfrentan a un nuevo enemigo del pasado.","director":"Louis Leterrier","reparto":"Vin Diesel, Jason Momoa, Michelle Rodriguez","embedUrl":"https://vimeos.net/embed-ib4j9frlk3bi.html"},{"titulo":"Transformers: El despertar de las bestias","poster":"https://image.tmdb.org/t/p/w600_and_h900_face/gPbM0MK8CP8A174rmUwGsADNYKD.jpg","rating":"6.1","anio":2023,"duracion":"2h 7min","genero":"Acción, Ciencia Ficción","descripcion":"Los Autobots se unen a los Maximals para salvar la Tierra.","director":"Steven Caple Jr.","reparto":"Anthony Ramos, Dominique Fishback, Peter Cullen","embedUrl":"https://vimeos.net/embed-wsicrksh3kzw.html"},{"titulo":"The Flash","poster":"https://image.tmdb.org/t/p/w600_and_h900_face/rktDFPbfHfUbArZ6OOOKsXcv0Bm.jpg","rating":"6.7","anio":2023,"duracion":"2h 24min","genero":"Acción, Ciencia Ficción","descripcion":"Barry Allen viaja en el tiempo para salvar a su madre, pero altera el futuro.","director":"Andy Muschietti","reparto":"Ezra Miller, Michael Keaton, Sasha Calle","embedUrl":"https://vimeos.net/embed-f93k796ofpv6.html"},{"titulo":"Aquaman y el Reino Perdido","poster":"https://image.tmdb.org/t/p/w600_and_h900_face/7lTnXOy0iNtBAdRP3TZvaKJ77F6.jpg","rating":"5.7","anio":2023,"duracion":"2h 4min","genero":"Acción, Fantasía","descripcion":"Aquaman debe proteger la Atlántida de una antigua amenaza.","director":"James Wan","reparto":"Jason Momoa, Patrick Wilson, Amber Heard","embedUrl":"https://vimeos.net/embed-jriijgw0pdum.html"},{"titulo":"The Marvels","poster":"https://image.tmdb.org/t/p/w600_and_h900_face/9GBhzXMFjgcZ3FdR9w3bUMMTps5.jpg","rating":"5.6","anio":2023,"duracion":"1h 45min","genero":"Acción, Ciencia Ficción","descripcion":"Carol Danvers, Kamala Khan y Monica Rambeau unen fuerzas para salvar el universo.","director":"Nia DaCosta","reparto":"Brie Larson, Teyonah Parris, Iman Vellani","embedUrl":"https://vimeos.net/embed-oybsudgyo6fi.html"},{"titulo":"Indiana Jones y el dial del destino","poster":"https://image.tmdb.org/t/p/w600_and_h900_face/Af4bXE63pVsb2FtbW8uYIyPBadD.jpg","rating":"6.6","anio":2023,"duracion":"2h 34min","genero":"Aventura, Acción","descripcion":"Indiana Jones se embarca en una última aventura para encontrar un antiguo artefacto.","director":"James Mangold","reparto":"Harrison Ford, Phoebe Waller-Bridge, Mads Mikkelsen","embedUrl":"https://vimeos.net/embed-r5vsr7frszen.html"},{"titulo":"Elemental","poster":"https://image.tmdb.org/t/p/w600_and_h900_face/4Y1WNkd88JXmGfhtWR7dmDAo1T2.jpg","rating":"6.9","anio":2023,"duracion":"1h 41min","genero":"Animación, Comedia","descripcion":"En una ciudad donde conviven fuego, agua, tierra y aire, una joven de fuego y un chico de agua se conocen.","director":"Peter Sohn","reparto":"Leah Lewis, Mamoudou Athie, Ronnie del Carmen","embedUrl":"https://vimeos.net/embed-j7e93zhr5gls.html"},{"titulo":"Venom","poster":"https://image.tmdb.org/t/p/w600_and_h900_face/2uNW4WbgBXL25BAbXGLnLqX71Sw.jpg","rating":"6.7","anio":2018,"duracion":"1h 52min","genero":"Acción, Ciencia Ficción","descripcion":"Un periodista adquiere poderes sobrehumanos tras unirse a un simbionte alienígena.","director":"Ruben Fleischer","reparto":"Tom Hardy, Michelle Williams, Riz Ahmed","embedUrl":"https://vimeos.net/embed-blbnnxp41i0i.html"},{"titulo":"El Conjuro","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/wVYREutTvI2tmxr6ujrHT704wGF.jpg","rating":"8.4","anio":2013,"duracion":"1h 52min","genero":"Terror y Thriller","descripcion":"Arthur Fleck, un comediante fracasado, se convierte en el Joker tras una serie de eventos trágicos.","director":"James Wan","reparto":"Joaquin Phoenix, Robert De Niro, Zazie Beetz","embedUrl":"https://vimeos.net/embed-o7kj1vz9hkbb.html"},{"titulo":"El Conjuro 2","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/zEqyD0SBt6HL7W9JQoWwtd5Do1T.jpg","rating":"8.5","anio":2016,"duracion":"2h 14min","genero":"Terror","descripcion":"Lorraine y Ed Warren viajan al norte de Londres para ayudar a una madre soltera.","director":"James Wan","reparto":"Vera Farmiga, Patrick Wilson, Frances O'Connor","embedUrl":"https://vimeos.net/embed-c7b5ase9682n.html"},{"titulo":"El Conjuro 3","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/xbSuFiJbbBWCkyCCKIMfuDCA4yV.jpg","rating":"8.5","anio":2021,"duracion":"1h 51min","genero":"Terror, Misterio y Thriller","descripcion":"Los investigadores paranormales Ed y Lorraine Warren se encuentran con un caso sensacional.","director":"Michael Chaves","reparto":"Vera Farmiga, Patrick Wilson, Ruairi O'Connor","embedUrl":"https://vimeos.net/embed-c7d2oqp83sx9.html"},{"titulo":"El Conjuro 4","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/byWgphT74ClOVa8EOGzYDkl8DVL.jpg","rating":"8.5","anio":2025,"duracion":"2h 16min","genero":"Terror","descripcion":"Los investigadores paranormales Ed y Lorraine Warren afrontan un último caso aterrador.","director":"Director","reparto":"Vera Farmiga, Patrick Wilson, Mia Tomlinson","embedUrl":"https://vimeos.net/embed-pazypz5yf1vk.html"},{"titulo":"La monja","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/sFC1ElvoKGdHJIWRpNB3xWJ9lJA.jpg","rating":"8.8","anio":2018,"duracion":"1h 36min","genero":"Terror","descripcion":"Un sacerdote y una novicia son enviados a Rumanía para investigar la muerte de una monja.","director":"Corin Hardy","reparto":"Taissa Farmiga, Demián Bichir, Jonas Bloquet","embedUrl":"https://vimeos.net/embed-g1444ti13rmx.html"},{"titulo":"La monja II","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/5gzzkR7y3hnY8AD1wXjCnVlHba5.jpg","rating":"8.7","anio":2023,"duracion":"1h 50min","genero":"Terror","descripcion":"En Francia de 1956, un sacerdote es asesinado y la hermana Irene comienza a investigar.","director":"Michael Chaves","reparto":"Taissa Farmiga, Jonas Bloquet, Storm Reid","embedUrl":"https://vimeos.net/embed-rhr9z7ad5hqm.html"},{"titulo":"Stuart Little 2","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/hjfeMLWqJY44mqqJKZSa6jx4Y1j.jpg","rating":"8.0","anio":2000,"duracion":"1h 18m","genero":"Familia, aventura y comedia","descripcion":"Stuart, un adorable ratón blanco, sigue viviendo feliz con su familia adoptiva, los Little, en el lado este de Central Park de Manhattan. Más locas aventuras con ratones se avecinan cuando Stuart, su hermano humano George y su travieso gato Snowbell salen a rescatar a un amigo","director":"Rob Minkoff","reparto":"Michael J. Fox, Geena Davis, Hugh Laurie, Jonathan Lipnicki, Melanie Griffith, Nathan Lane, James Woods, Steve Zahn, John Michael Lee","embedUrl":"https://vimeos.net/embed-u9d388mvzr9y.html"},{"titulo":"Titanic","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg","rating":"8.0","anio":1997,"duracion":"3h 14m","genero":"Drama y romance","descripcion":"Rose DeWitt Bukater, de 101 años, cuenta la historia de su vida a bordo del Titanic, 84 años después. Una joven Rose embarca en el barco con su madre y su prometido. Mientras tanto, Jack Dawson y Fabrizio De Rossi ganan billetes de tercera clase a bordo del barco. Rose cuenta toda la historia desde la partida del Titanic hasta su muerte—en su primer y último viaje el 15 de abril de 1912","director":"James Cameron","reparto":"Leonardo DiCaprio, Kate Winslet, Billy Zane, Kathy Bates, Frances Fisher, Gloria Stuart, Bill Paxton, Bernard Hill, David Warner, Danny Nucci.","embedUrl":"https://vimeos.net/embed-gkydkzkvctxk.html"},{"titulo":"Interestelar","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/yQvGrMoipbRoddT0ZR8tPoR7NfX.jpg","rating":"8.0","anio":2014,"duracion":"2h 49m","genero":"Aventura, Drama y Ciencia Ficción","descripcion":"Las aventuras de un grupo de exploradores que utilizan un agujero de gusano recién descubierto para superar las limitaciones de los viajes espaciales humanos y conquistar las vastas distancias que implica un viaje interestelar","director":"Christopher Nolan","reparto":"Matthew McConaughey, Anne Hathaway, Jessica Chastain, Mackenzie Foy, Michael Caine, Casey Affleck, Wes Bentley, John Lithgow, Timothée Chalamet, Ellen Burstyn, David Gyasi, Matt Damon y Bill Irwin","embedUrl":"https://vimeos.net/embed-voyzexg50uaj.html"},{"titulo":"Megalodón 2","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/4m1Au3YkjqsxF8iwQy0fPYSxE0h.jpg","rating":"8.0","anio":2021,"duracion":"1h 56m","genero":"Acción, Ciencia Ficción y Terror","descripcion":"Una inmersión exploratoria en las profundidades más profundas del océano de un audaz equipo de investigación se desmorona en el caos cuando una operación minera malévola amenaza su misión y les obliga a una batalla de alto riesgo por sobrevivir","director":"Ben Wheatley","reparto":"Jason Statham, Wu Jing, Sophia Shuya Cai, Page Kennedy, Sergio Peris-Mencheta, Skyler Samuels, Cliff Curtis, Melissanthi Mahut y Whoopie Van Raam","embedUrl":"https://vimeos.net/embed-1ois8u27oivf.html"},{"titulo":"Sonic La Película","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/aQvJ5WPzZgYVDrxLX4R6cLJCEaQ.jpg","rating":"8.0","anio":2020,"duracion":"1h 39m","genero":"Acción, Ciencia Ficción, Comedia y Familia","descripcion":"Impulsado con una velocidad increíble, Sonic The Hedgehog abraza su nuevo hogar en la Tierra. Eso es, hasta que Sonic llama la atención del genio malvado super-poco guay Dr. Robotnik. Ahora es supervillano contra supersónico en una carrera total por todo el mundo para evitar que Robotnik use el poder único de Sonic para dominar el mundo","director":"Jeff Fowler","reparto":"Ben Schwartz, James Marsden, Jim Carrey, Tika Sumpter, Natasha Rothwell, Adam Pally, Neal McDonough, Frank C. Turner, Colleen O'Shaughnessey","embedUrl":"https://vimeos.net/embed-weoww4ee4f80.html"},{"titulo":"Sonic 2","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/6DrHO1jr3qVrViUO6s6kFiAGM7.jpg","rating":"8.0","anio":2022,"duracion":"2h 3m","genero":"Acción, Aventura, Familia y Comedia","descripcion":"Tras establecerse en Green Hills, Sonic quiere demostrar que puede ser un verdadero héroe. Cuando el Dr. Robotnik regresa junto a Knuckles en busca de una poderosa esmeralda, Sonic se une a Tails para encontrarla antes que ellos y evitar que su poder caiga en malas manos","director":"Jeff Fowler","reparto":"Ben Schwartz, James Marsden, Jim Carrey, Tika Sumpter, Natasha Rothwell, Adam Pally, Shemar Moore, Colleen O'Shaughnessey, Idris Elba, Lee Majdoub","embedUrl":"https://vimeos.net/embed-cyj0ugagvis1.html"},{"titulo":"Sonic 3","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/d8Ryb8AunYAuycVKDp5HpdWPKgC.jpg","rating":"8.0","anio":2024,"duracion":"1h 50m","genero":"Acción, Ciencia Ficción, Comedia y Familia","descripcion":"Sonic, Knuckles y Tails se enfrentan a Shadow, un poderoso y misterioso adversario que los supera en fuerza y habilidades. Ante esta amenaza, el Equipo Sonic deberá dejar de lado sus diferencias y formar una alianza inesperada para detenerlo y proteger el planeta","director":"Jeff Fowler","reparto":"Jim Carrey, Ben Schwartz, Keanu Reeves, James Marsden, Tika Sumpter, Colleen O'Shaughnessey, Idris Elba, Adam Pally, Lee Majdoub, Alyla Browne","embedUrl":"https://vimeos.net/embed-5z0kyms1zyct.html"},{"titulo":"Oppenheimer","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg","rating":"8.0","anio":2023,"duracion":"3h 1m","genero":"Drama, historia","descripcion":"La historia del papel de J. Robert Oppenheimer en el desarrollo de la bomba atómica durante la Segunda Guerra Mundial","director":"Christopher Nolan","reparto":"Cillian Murphy, Emily Blunt, Matt Damon, Robert Downey Jr., Florence Pugh, Josh Hartnett, Benny Safdie, Michael Angarano, Josh Peck, Rami Malek","embedUrl":"https://vimeos.net/embed-klxgsdzm21sx.html"},{"titulo":"Terrifier","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/fjXqhGmaeQpB73WerhrYU6HlyV5.jpg","rating":"8.0","anio":2018,"duracion":"1h 24m","genero":"Terror","descripcion":"Un payaso maníaco llamado Art aterroriza a tres jóvenes en la noche de Halloween y a todos los demás que se interponen en su camino","director":"Damien Leone","reparto":"David Howard Thornton, Jenna Kanell, Samantha Scaffidi, Catherine Corcoran, Pooya Mohseni, Matt McAllister, Gino Cafarelli","embedUrl":"https://vimeos.net/embed-yf8nujvfjro9.html"},{"titulo":"Terrifier 2: El Payaso Siniestro","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/qEAlwXbYk6IHA4ztoS2XFFaa7Xo.jpg","rating":"8.0","anio":2022,"duracion":"2h 18m","genero":"Terror","descripcion":"Un año después de la masacre del condado de Miles, Art el Payaso regresa de entre los muertos para sembrar el terror en Halloween. Su objetivo es Sienna y su hermano Jonathan, quienes deberán luchar por sobrevivir mientras descubren el verdadero origen de la maldad de Art","director":"Damien Leone","reparto":"David Howard Thornton, Lauren LaVera, Elliott Fullam, Sarah Voigt, Kailey Hyman, Casey Hartnett, Chris Jericho, Samantha Scaffidi","embedUrl":"https://vimeos.net/embed-ku8mprxh0ef8.html"},{"titulo":"Terrifier 3 Payaso Siniestro","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/ju10W5gl3PPK3b7TjEmVOZap51I.jpg","rating":"8.0","anio":2024,"duracion":"2h 5m","genero":"Terror","descripcion":"Cinco años después de sobrevivir a la masacre de Halloween, Sienna y Jonathan intentan reconstruir sus vidas y dejar atrás el horror. Sin embargo, Art el Payaso regresa durante la Navidad para convertir las celebraciones en una nueva pesadilla, desatando una ola de terror y demostrando que ninguna festividad está a salvo","director":"Damien Leone","reparto":"David Howard Thornton, Lauren LaVera, Samantha Scaffidi, Elliott Fullam, Daniel Roebuck, Chris Jericho, Jason Patric, Antonella Rose, Krystal Marsh","embedUrl":"https://vimeos.net/embed-nnuybxi6bsta.html"},{"titulo":"Superman","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/ldyfo0BKmz5rWtJJKCvwaNS4cJT.jpg","rating":"8.0","anio":2025,"duracion":"2h 10m","genero":"Ciencia Ficción, Aventura y Acción","descripcion":"Superman, un periodista en Metrópolis, emprende un viaje para reconciliar su herencia kriptoniana con su educación humana como Clark Kent","director":"James Gunn","reparto":"David Corenswet, Rachel Brosnahan, Nicholas Hoult, Edi Gathegi, Nathan Fillion, Isabela Merced, Skyler Gisondo, María Gabriela de Faría, Sara Sampaio, Wendell Pierce","embedUrl":"https://vimeos.net/embed-ncph02w1zpi2.html"},{"titulo":"Michael","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/zm0KAbOjlt9eR5y7vDiL2dEOwMl.jpg","rating":"8.0","anio":2026,"duracion":"2h 8m","genero":"Música y teatro","descripcion":"La película narra la vida de Michael Jackson, desde sus inicios como integrante de los Jackson Five hasta su transformación en uno de los artistas más influyentes de la historia. Explora su vida personal, su enorme ambición creativa y el camino que lo llevó a convertirse en una leyenda de la música, incluyendo algunas de sus actuaciones más memorables como solista","director":"Antoine Fuqua","reparto":"Jaafar Jackson, Nia Long, Colman Domingo, Miles Teller, Laura Harrier, Juliano Krue Valdi, Larenz Tate, Kat Graham, Jessica Sula, Kendrick Sampson","embedUrl":"https://vimeos.net/embed-85qzksqyf42k.html"},{"titulo":"Evil Dead En llamas","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/uRxrNXQWkHoENm3nwVOZDYSCx2F.jpg","rating":"8.0","anio":2026,"duracion":"1h 50m","genero":"Terror","descripcion":"Tras la repentina muerte de su marido, Alice busca consuelo con su familia restante, descendientes de una destacada investigadora sobre la posesión demoníaca. A medida que sus suegros se transforman uno a uno en criaturas que se alimentan del miedo, descubre que los votos que hizo en vida sobreviven incluso en la muerte","director":"Sébastien Vaniček","reparto":"Lily Sullivan, Alyssa Sutherland, Nell Fisher, Shiloh Fernandez, Gabrielle Echols","embedUrl":"https://vimeos.net/embed-72cgndb5cklj.html"},{"titulo":"Deadpool & Wolverine","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg","rating":"8.0","anio":2024,"duracion":"2h 8m","genero":"Acción, comedia y ciencia ficción","descripcion":"Un apático Wade Wilson trabaja arduamente en la vida civil con sus días como el mercenario moralmente flexible, Deadpool, a su lado. Pero cuando su mundo natal se enfrenta a una amenaza existencial, Wade debe volver a ponerse el traje a regañadientes junto a un Lobezno aún más reacio","director":"Shawn Levy","reparto":"Ryan Reynolds, Hugh Jackman, Emma Corrin, Morena Baccarin, Rob Delaney, Leslie Uggams, Karan Soni, Matthew Macfadyen, Brianna Hildebrand, Stefan Kapičić","embedUrl":"https://vimeos.net/embed-tmbjqufb955w.html"},{"titulo":"Lilo y Stitch","poster":"https://www.themoviedb.org/t/p/w600_and_h900_face/ckQzKpQJO4ZQDCN5evdpKcfm7Ys.jpg","rating":"8.0","anio":2025,"duracion":"1h 48m","genero":"Familia, ciencia ficción y comedia","descripcion":"La historia tremendamente divertida y conmovedora de una chica hawaiana solitaria y el alienígena fugitivo que ayuda a sanar a su familia rota","director":"Dean Fleischer Camp","reparto":"Maia Kealoha, Sydney Agudong, Chris Sanders, Zach Galifianakis, Billy Magnussen, Courtney B. Vance, Amy Hill, Tia Carrere, Kaipo Dudoit","embedUrl":"https://vimeos.net/embed-uzilzbe2bjz3.html"}];
+
+    // ================================================================
+    // BASE DE DATOS DE SERIES
+    // ================================================================
+    const series = [];
+
+    // ================================================================
+    // VARIABLES GLOBALES
+    // ================================================================
+    let serieActual = null;
+    let adminLogeado = false;
+
+    // ================================================================
+    // FUNCIONES DE LA PÁGINA
+    // ================================================================
+    function crearTarjeta(item) {
+        const card = document.createElement('div');
+        card.className = 'movie-card';
+        card.tabIndex = 0;
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-label', `Ver ${item.titulo}`);
+        
+        card.onclick = function() { openModal(item); };
+        card.onkeydown = function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openModal(item);
+            }
+        };
+        
+        const generoMostrado = Array.isArray(item.genero) ? item.genero.join(', ') : item.genero;
+        
+        card.innerHTML = `
+            <div class="movie-poster-wrapper">
+                <img src="${item.poster}" alt="${item.titulo}" class="movie-poster" 
+                     onerror="this.src='https://via.placeholder.com/250x370/333333/ffffff?text=${encodeURIComponent(item.titulo)}'">
+            </div>
+            <div class="movie-info">
+                <h3 class="movie-title">${item.titulo}</h3>
+                <p class="movie-rating">⭐ ${item.rating} | ${item.anio}</p>
+                <p class="movie-genre">${generoMostrado || ''}</p>
+            </div>
+        `;
+        
+        return card;
+    }
+
+    function cargarPeliculas() {
+        const movieGrid = document.getElementById('movieGrid');
+        const terrorGrid = document.getElementById('terrorGrid');
+        const seriesGrid = document.getElementById('seriesGrid');
+
+        movieGrid.innerHTML = '';
+        terrorGrid.innerHTML = '';
+        seriesGrid.innerHTML = '';
+
+        peliculas.forEach(pelicula => {
+            const esTerror = typeof pelicula.genero === 'string' &&
+                pelicula.genero.toLowerCase().includes('terror');
+
+            if (esTerror) {
+                terrorGrid.appendChild(crearTarjeta(pelicula));
+            } else {
+                movieGrid.appendChild(crearTarjeta(pelicula));
+            }
+        });
+
+        series.forEach(serie => {
+            seriesGrid.appendChild(crearTarjeta(serie));
+        });
+
+        actualizarListaAdmin();
+    }
+
+    // ================================================================
+    // MODAL
+    // ================================================================
+    function openModal(item) {
+        const modal = document.getElementById('videoModal');
+        const modalBody = document.getElementById('modalBody');
+        
+        if (item.temporadas && item.temporadas.length > 0) {
+            serieActual = item;
+            mostrarSerie(item, modalBody);
+        } else {
+            mostrarPelicula(item, modalBody);
+        }
+        
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        modal.scrollTop = 0;
+    }
+
+    function mostrarPelicula(pelicula, contenedor) {
+        const generoMostrado = Array.isArray(pelicula.genero) ? pelicula.genero.join(', ') : pelicula.genero;
+        
+        contenedor.innerHTML = `
+            <div class="modal-details">
+                <h2 class="modal-title">${pelicula.titulo}</h2>
+                <div class="modal-meta">
+                    <span class="modal-meta-item">⭐ ${pelicula.rating}</span>
+                    <span class="modal-meta-item">📅 ${pelicula.anio}</span>
+                    <span class="modal-meta-item">⏱️ ${pelicula.duracion}</span>
+                    <span class="modal-meta-item">🎭 ${generoMostrado}</span>
+                </div>
+                <p class="modal-description">${pelicula.descripcion}</p>
+                
+                <div class="info-adicional">
+                    <h3>Información Adicional</h3>
+                    <p><strong>Director:</strong> ${pelicula.director}</p>
+                    <p><strong>Reparto:</strong> ${pelicula.reparto}</p>
+                </div>
+                
+                <div class="video-container">
+                    <iframe src="${pelicula.embedUrl}" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        `;
+    }
+
+    function mostrarSerie(serie, contenedor) {
+        contenedor.innerHTML = `
+            <div class="modal-details">
+                <h2 class="modal-title">${serie.titulo}</h2>
+                <div class="modal-meta">
+                    <span class="modal-meta-item">⭐ ${serie.rating}</span>
+                    <span class="modal-meta-item">📅 ${serie.anio}</span>
+                    <span class="modal-meta-item">🎭 ${serie.genero}</span>
+                    <span class="modal-meta-item">📺 ${serie.temporadas.length} Temporadas</span>
+                </div>
+                <p class="modal-description">${serie.descripcion}</p>
+                
+                <div class="info-adicional">
+                    <h3>Información Adicional</h3>
+                    <p><strong>Creador:</strong> ${serie.creador}</p>
+                    <p><strong>Reparto:</strong> ${serie.reparto}</p>
+                </div>
+                
+                <div class="temporadas-container">
+                    <h3>📋 Temporadas y Capítulos</h3>
+                    ${serie.temporadas.map(temporada => `
+                        <div class="temporada-section">
+                            <div class="temporada-header" onclick="toggleCapitulos(${temporada.numero})">
+                                <span class="temporada-title">Temporada ${temporada.numero} (${temporada.anio})</span>
+                                <span class="temporada-info">${temporada.capitulos.length} capítulos ▼</span>
+                            </div>
+                            <div class="capitulos-container" id="capitulos-${temporada.numero}">
+                                ${temporada.capitulos.map(capitulo => `
+                                    <div class="capitulo-item" onclick="reproducirCapitulo(${temporada.numero}, ${capitulo.numero})">
+                                        <div class="capitulo-numero-badge">${capitulo.numero}</div>
+                                        <div class="capitulo-info">
+                                            <div class="capitulo-nombre">${capitulo.nombre}</div>
+                                            <div class="capitulo-duracion">⏱️ ${capitulo.duracion}</div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    function toggleCapitulos(numeroTemporada) {
+        const contenedor = document.getElementById(`capitulos-${numeroTemporada}`);
+        if (contenedor) {
+            contenedor.classList.toggle('activo');
+        }
+    }
+
+    function reproducirCapitulo(numeroTemporada, numeroCapitulo) {
+        if (!serieActual) return;
+        
+        const temporada = serieActual.temporadas.find(t => t.numero === numeroTemporada);
+        if (!temporada) return;
+        
+        const capitulo = temporada.capitulos.find(c => c.numero === numeroCapitulo);
+        if (!capitulo) return;
+        
+        const modalBody = document.getElementById('modalBody');
+        
+        modalBody.innerHTML = `
+            <div class="modal-details">
+                <button class="btn-volver" onclick="volverASerie()">← Volver a la serie</button>
+                
+                <h2 class="modal-title">${serieActual.titulo}</h2>
+                <p style="color: var(--primary); font-size: 18px; margin-bottom: 20px;">
+                    Temporada ${numeroTemporada} - Episodio ${numeroCapitulo}: ${capitulo.nombre}
+                </p>
+                
+                <div class="video-container">
+                    <iframe src="${capitulo.embedUrl}" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        `;
+        
+        document.getElementById('videoModal').scrollTop = 0;
+    }
+
+    function volverASerie() {
+        if (!serieActual) return;
+        
+        const modalBody = document.getElementById('modalBody');
+        mostrarSerie(serieActual, modalBody);
+        
+        document.getElementById('videoModal').scrollTop = 0;
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('videoModal');
+        const modalBody = document.getElementById('modalBody');
+        
+        modalBody.innerHTML = '';
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        serieActual = null;
+    }
+
+    // ================================================================
+    // ADMINISTRACIÓN
+    // ================================================================
+    const ADMIN_CLAVE = "cine2024";
+
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+            e.preventDefault();
+            abrirAdmin();
+        }
+    });
+
+    document.getElementById('adminTrigger').addEventListener('click', abrirAdmin);
+
+    function abrirAdmin() {
+        const panel = document.getElementById('adminPanel');
+        panel.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        
+        document.getElementById('loginAdmin').style.display = 'block';
+        document.getElementById('formularioAdmin').style.display = 'none';
+        document.getElementById('errorClave').style.display = 'none';
+        document.getElementById('claveAdmin').value = '';
+        
+        setTimeout(() => document.getElementById('claveAdmin').focus(), 100);
+        
+        actualizarListaAdmin();
+    }
+
+    function cerrarAdmin() {
+        document.getElementById('adminPanel').style.display = 'none';
+        document.body.style.overflow = 'auto';
+        adminLogeado = false;
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && document.getElementById('adminPanel').style.display === 'block') {
+            cerrarAdmin();
+        }
+    });
+
+    function verificarClave() {
+        const clave = document.getElementById('claveAdmin').value;
+        if (clave === ADMIN_CLAVE) {
+            adminLogeado = true;
+            document.getElementById('loginAdmin').style.display = 'none';
+            document.getElementById('formularioAdmin').style.display = 'block';
+            document.getElementById('errorClave').style.display = 'none';
+            actualizarListaAdmin();
+        } else {
+            document.getElementById('errorClave').style.display = 'block';
+            document.getElementById('claveAdmin').value = '';
+            document.getElementById('claveAdmin').focus();
+        }
+    }
+
+    document.getElementById('claveAdmin').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            verificarClave();
+        }
+    });
+
+    function cambiarTab(tab) {
+        document.querySelectorAll('.admin-tabs button').forEach(b => b.classList.remove('active'));
+        if (tab === 'peliculas') {
+            document.querySelector('.admin-tabs button:first-child').classList.add('active');
+            document.getElementById('tabPeliculas').style.display = 'block';
+            document.getElementById('tabSeries').style.display = 'none';
+        } else {
+            document.querySelector('.admin-tabs button:last-child').classList.add('active');
+            document.getElementById('tabPeliculas').style.display = 'none';
+            document.getElementById('tabSeries').style.display = 'block';
+        }
+    }
+
+    // ================================================================
+    // AGREGAR PELÍCULA
+    // ================================================================
+    function agregarPelicula() {
+        if (!adminLogeado) {
+            alert('⚠️ Primero debes iniciar sesión');
+            return;
+        }
+
+        const titulo = document.getElementById('adminTitulo').value.trim();
+        const poster = document.getElementById('adminPoster').value.trim();
+        const genero = document.getElementById('adminGenero').value.trim();
+        const anio = document.getElementById('adminAnio').value.trim();
+        const duracion = document.getElementById('adminDuracion').value.trim();
+        const director = document.getElementById('adminDirector').value.trim();
+        const reparto = document.getElementById('adminReparto').value.trim();
+        const embedUrl = document.getElementById('adminVideo').value.trim();
+        const descripcion = document.getElementById('adminDescripcion').value.trim();
+
+        let errores = [];
+        if (!titulo) errores.push('Título');
+        if (!poster) errores.push('URL del Poster');
+        if (!genero) errores.push('Género');
+        if (!anio) errores.push('Año');
+        if (!embedUrl) errores.push('URL del Video');
+
+        if (errores.length > 0) {
+            alert('❌ Faltan campos obligatorios (*):\n\n' + errores.map(e => '• ' + e).join('\n'));
+            return;
+        }
+
+        const nuevaPelicula = {
+            titulo: titulo,
+            poster: poster,
+            rating: "8.0",
+            anio: parseInt(anio),
+            duracion: duracion || "2h 00min",
+            genero: genero,
+            descripcion: descripcion || "Sin descripción disponible.",
+            director: director || "Director",
+            reparto: reparto || "Reparto",
+            embedUrl: embedUrl
+        };
+
+        peliculas.push(nuevaPelicula);
+        cargarPeliculas();
+        actualizarListaAdmin();
+        limpiarFormularioPelicula();
+
+        alert('✅ ¡Película agregada correctamente!\n\n' + titulo + ' (' + anio + ')\n\n⚠️ Recuerda usar "Guardar en el código" para hacerla permanente.');
+    }
+
+    function limpiarFormularioPelicula() {
+        document.getElementById('adminTitulo').value = '';
+        document.getElementById('adminPoster').value = '';
+        document.getElementById('adminGenero').value = '';
+        document.getElementById('adminAnio').value = '';
+        document.getElementById('adminDuracion').value = '';
+        document.getElementById('adminDirector').value = '';
+        document.getElementById('adminReparto').value = '';
+        document.getElementById('adminVideo').value = '';
+        document.getElementById('adminDescripcion').value = '';
+    }
+
+    // ================================================================
+    // AGREGAR SERIE
+    // ================================================================
+    function agregarSerie() {
+        if (!adminLogeado) {
+            alert('⚠️ Primero debes iniciar sesión');
+            return;
+        }
+
+        const titulo = document.getElementById('adminSerieTitulo').value.trim();
+        const poster = document.getElementById('adminSeriePoster').value.trim();
+        const genero = document.getElementById('adminSerieGenero').value.trim();
+        const anio = document.getElementById('adminSerieAnio').value.trim();
+        const creador = document.getElementById('adminSerieCreador').value.trim() || "Creador";
+        const reparto = document.getElementById('adminSerieReparto').value.trim() || "Reparto";
+        const descripcion = document.getElementById('adminSerieDescripcion').value.trim() || "Sin descripción disponible.";
+        const temporadaNum = document.getElementById('adminSerieTemporada').value.trim();
+        const temporadaAnio = document.getElementById('adminSerieTemporadaAnio').value.trim() || anio;
+        const capitulosNombres = document.getElementById('adminSerieCapitulos').value.trim();
+        const capitulosUrls = document.getElementById('adminSerieUrls').value.trim();
+
+        let errores = [];
+        if (!titulo) errores.push('Título de la Serie');
+        if (!poster) errores.push('URL del Poster');
+        if (!genero) errores.push('Género');
+        if (!anio) errores.push('Año');
+        if (!temporadaNum) errores.push('Número de Temporada');
+        if (!capitulosNombres) errores.push('Nombres de los capítulos');
+        if (!capitulosUrls) errores.push('URLs de los capítulos');
+
+        if (errores.length > 0) {
+            alert('❌ Faltan campos obligatorios (*):\n\n' + errores.map(e => '• ' + e).join('\n'));
+            return;
+        }
+
+        const nombres = capitulosNombres.split(',').map(s => s.trim()).filter(s => s);
+        const urls = capitulosUrls.split(',').map(s => s.trim()).filter(s => s);
+
+        if (nombres.length !== urls.length) {
+            alert('❌ El número de nombres de capítulos debe coincidir con el número de URLs');
+            return;
+        }
+
+        const capitulos = nombres.map((nombre, i) => ({
+            numero: i + 1,
+            nombre: nombre,
+            duracion: "45 min",
+            embedUrl: urls[i] || "https://www.youtube.com/embed/dQw4w9WgXcQ"
+        }));
+
+        const nuevaSerie = {
+            titulo: titulo,
+            poster: poster,
+            rating: "8.0",
+            anio: parseInt(anio),
+            genero: genero,
+            descripcion: descripcion,
+            creador: creador,
+            reparto: reparto,
+            temporadas: [
+                {
+                    numero: parseInt(temporadaNum),
+                    anio: parseInt(temporadaAnio),
+                    capitulos: capitulos
+                }
+            ]
+        };
+
+        series.push(nuevaSerie);
+        cargarPeliculas();
+        actualizarListaAdmin();
+        limpiarFormularioSerie();
+
+        alert('✅ ¡Serie agregada correctamente!\n\n' + titulo + ' (' + anio + ')\n\n⚠️ Recuerda usar "Guardar en el código" para hacerla permanente.');
+    }
+
+    function limpiarFormularioSerie() {
+        document.getElementById('adminSerieTitulo').value = '';
+        document.getElementById('adminSeriePoster').value = '';
+        document.getElementById('adminSerieGenero').value = '';
+        document.getElementById('adminSerieAnio').value = '';
+        document.getElementById('adminSerieCreador').value = '';
+        document.getElementById('adminSerieReparto').value = '';
+        document.getElementById('adminSerieDescripcion').value = '';
+        document.getElementById('adminSerieTemporada').value = '';
+        document.getElementById('adminSerieTemporadaAnio').value = '';
+        document.getElementById('adminSerieCapitulos').value = '';
+        document.getElementById('adminSerieUrls').value = '';
+    }
+
+    // ================================================================
+    // ACTUALIZAR LISTA ADMIN
+    // ================================================================
+    function actualizarListaAdmin() {
+        const lista = document.getElementById('listaPeliculasAdmin');
+        const contador = document.getElementById('contadorPeliculas');
+        
+        const total = peliculas.length;
+        contador.textContent = total + ' películas';
+
+        if (total === 0) {
+            lista.innerHTML = '<div class="vacio">No hay películas en el catálogo.</div>';
+            return;
+        }
+
+        lista.innerHTML = '';
+        
+        peliculas.forEach((pelicula, index) => {
+            const item = document.createElement('div');
+            item.className = 'pelicula-item';
+            
+            item.innerHTML = `
+                <div class="info">
+                    <img src="${pelicula.poster}" class="mini-poster" onerror="this.style.display='none'">
+                    <div class="text">
+                        <div class="titulo">${pelicula.titulo}</div>
+                        <div class="detalle">${pelicula.anio} • ${pelicula.genero}</div>
                     </div>
+                </div>
+                <div class="acciones">
+                    <button class="btn-eliminar" onclick="eliminarPelicula(${index})" title="Eliminar">🗑️</button>
                 </div>
             `;
             
-            document.getElementById('videoModal').scrollTop = 0;
+            lista.appendChild(item);
+        });
+    }
+
+    function eliminarPelicula(index) {
+        if (!adminLogeado) return;
+        
+        const pelicula = peliculas[index];
+        if (!pelicula) return;
+        
+        if (confirm(`¿Eliminar "${pelicula.titulo}" del catálogo?`)) {
+            peliculas.splice(index, 1);
+            cargarPeliculas();
+            actualizarListaAdmin();
+        }
+    }
+
+    // ================================================================
+    // EXPORTAR HTML
+    // ================================================================
+    function exportarHTML() {
+        if (!adminLogeado) {
+            alert('⚠️ Primero debes iniciar sesión');
+            return;
         }
 
-        function volverASerie() {
-            if (!serieActual) return;
-            
-            const modalBody = document.getElementById('modalBody');
-            mostrarSerie(serieActual, modalBody);
-            
-            document.getElementById('videoModal').scrollTop = 0;
-        }
+        // Obtener el HTML actual
+        let html = document.documentElement.outerHTML;
+        
+        // Reemplazar el array de películas
+        const peliculasJSON = JSON.stringify(peliculas);
+        const regexPelis = /const peliculas\s*=\s*\[[\s\S]*?\];/;
+        const nuevoBloquePelis = `const peliculas = ${peliculasJSON};`;
+        html = html.replace(regexPelis, nuevoBloquePelis);
+        
+        // Reemplazar el array de series
+        const seriesJSON = JSON.stringify(series);
+        const regexSeries = /const series\s*=\s*\[[\s\S]*?\];/;
+        const nuevoBloqueSeries = `const series = ${seriesJSON};`;
+        html = html.replace(regexSeries, nuevoBloqueSeries);
+        
+        // Crear el blob y descargar
+        const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'CineStream_Actualizado.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        alert('✅ ¡HTML guardado correctamente!\n\n' +
+              '📁 Se descargó "CineStream_Actualizado.html"\n' +
+              '📋 Películas incluidas en el código: ' + peliculas.length + '\n' +
+              '📺 Series incluidas en el código: ' + series.length);
+    }
 
-        function closeModal() {
-            const modal = document.getElementById('videoModal');
-            const modalBody = document.getElementById('modalBody');
+    // ================================================================
+    // BUSCADOR Y NAVEGACIÓN
+    // ================================================================
+    document.querySelector('.search-bar').addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase().trim();
+        const allCards = document.querySelectorAll('.movie-card');
+        
+        allCards.forEach(card => {
+            const title = card.querySelector('.movie-title')?.textContent.toLowerCase() || '';
+            const genre = card.querySelector('.movie-genre')?.textContent.toLowerCase() || '';
             
-            modalBody.innerHTML = '';
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-            serieActual = null;
-        }
-
-        // Event Listeners
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeModal();
+            if (title.includes(searchTerm) || genre.includes(searchTerm) || searchTerm === '') {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
             }
         });
 
-        document.getElementById('videoModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
+        const grids = document.querySelectorAll('.movie-grid');
+        grids.forEach(grid => {
+            const mensajeExistente = grid.querySelector('.sin-resultados');
+            const cardsVisibles = grid.querySelectorAll('.movie-card[style*="display: block"]');
+            
+            if (cardsVisibles.length === 0 && searchTerm !== '') {
+                if (!mensajeExistente) {
+                    const mensaje = document.createElement('div');
+                    mensaje.className = 'sin-resultados';
+                    mensaje.textContent = `No se encontraron resultados para "${searchTerm}"`;
+                    grid.appendChild(mensaje);
+                }
+            } else {
+                if (mensajeExistente) {
+                    mensajeExistente.remove();
+                }
             }
         });
+    });
 
-        document.querySelector('.search-bar').addEventListener('input', function(e) {
-            const searchTerm = e.target.value.toLowerCase().trim();
-            const allCards = document.querySelectorAll('.movie-card');
-            
-            allCards.forEach(card => {
-                const title = card.querySelector('.movie-title')?.textContent.toLowerCase() || '';
-                const genre = card.querySelector('.movie-genre')?.textContent.toLowerCase() || '';
-                
-                if (title.includes(searchTerm) || genre.includes(searchTerm) || searchTerm === '') {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-
-            // Mostrar mensaje si no hay resultados
-            const grids = document.querySelectorAll('.movie-grid');
-            grids.forEach(grid => {
-                const mensajeExistente = grid.querySelector('.sin-resultados');
-                const cardsVisibles = grid.querySelectorAll('.movie-card[style*="display: block"]');
-                
-                if (cardsVisibles.length === 0 && searchTerm !== '') {
-                    if (!mensajeExistente) {
-                        const mensaje = document.createElement('div');
-                        mensaje.className = 'sin-resultados';
-                        mensaje.textContent = `No se encontraron resultados para "${searchTerm}"`;
-                        grid.appendChild(mensaje);
-                    }
-                } else {
-                    if (mensajeExistente) {
-                        mensajeExistente.remove();
-                    }
-                }
-            });
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
         });
+    });
 
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
+    // ================================================================
+    // EVENTOS DEL MODAL
+    // ================================================================
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeModal();
+        }
+    });
 
-        // Inicializar
-        window.addEventListener('DOMContentLoaded', cargarPeliculas);
+    document.getElementById('videoModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeModal();
+        }
+    });
+
+    // ================================================================
+    // INICIAR
+    // ================================================================
+    window.addEventListener('DOMContentLoaded', function() {
+        cargarPeliculas();
+        console.log('🎬 CineStream iniciado correctamente');
+        console.log('📋 Películas:', peliculas.length);
+        console.log('📺 Series:', series.length);
+        console.log('🔑 Admin: Ctrl+Shift+A o clic en ⚙️');
+        console.log('🔐 Contraseña: cine2024');
+        console.log('✅ El panel de administración está oculto por defecto');
+    });
     </script>
+
 </body>
 </html>
